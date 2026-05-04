@@ -70,6 +70,11 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<IDriverService, DriverService>();
+builder.Services.AddScoped<IPrimeMoverService, PrimeMoverService>();
+builder.Services.AddScoped<ITimeSlotService, TimeSlotService>();
+builder.Services.AddScoped<ITrailerService, TrailerService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

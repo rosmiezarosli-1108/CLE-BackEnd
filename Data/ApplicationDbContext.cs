@@ -15,6 +15,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<ContainerAddress> ContainerAddresses { get; set; }
     public DbSet<AssignedHaulier> AssignedHauliers { get; set; }
     public DbSet<BookingDocument> BookingDocuments { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
+    public DbSet<PrimeMover> PrimeMovers { get; set; }
+    public DbSet<TimeSlot> TimeSlots { get; set; }
+    public DbSet<Trailer> Trailers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
