@@ -133,3 +133,4 @@
 /Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/obj/Debug/net10.0/CLE BackEnd.pdb
 /Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/obj/Debug/net10.0/CLE BackEnd.genruntimeconfig.cache
 /Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/obj/Debug/net10.0/ref/CLE BackEnd.dll
+/Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/obj/Debug/net10.0/CLE BackEnd.sourcelink.json

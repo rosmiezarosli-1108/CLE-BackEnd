@@ -10,4 +10,5 @@ public interface IBookingService
     Task<BookingDto?> UpdateAsync(string id, BookingUpdateDto dto);
     Task<bool> DeleteAsync(string id);
     Task<IEnumerable<BookingDto>> GetAllBookingsByForwarding(string forwarderId);
+    Task<IEnumerable<BookingDto>> GetAllBookingsByHaulier(string haulierId);
 }

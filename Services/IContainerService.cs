@@ -10,4 +10,5 @@ public interface IContainerService
     Task<ContainerDto?> UpdateAsync(int id, ContainerUpdateDto dto);
     Task<bool> DeleteAsync(int id);
     Task<IEnumerable<ContainerDto>> GetAllContainersByForwarding(string forwarderId);
+    Task<IEnumerable<ContainerDto>> GetAllContainersByHaulier(string haulierId);
 }

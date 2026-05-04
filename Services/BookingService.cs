@@ -172,4 +172,14 @@ public class BookingService : IBookingService
             .ToListAsync();
         return bookings.Select(MapToDto);
     }
+    
+    public async Task<IEnumerable<BookingDto>> GetAllBookingsByHaulier(string haulierId)
+    {
+        var bookings = await _dbContext.Bookings
+            .Include(b => b.ForwardingCompany)       
+            .Include(b => b.ShippingAgentCompany)
+            .Where(b => b.ForwardingId == haulierId)
+            .ToListAsync();
+        return bookings.Select(MapToDto);
+    }
 }

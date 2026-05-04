@@ -87,4 +87,11 @@ public class BookingController : ControllerBase
         var bookings = await _bookingService.GetAllBookingsByForwarding(id);
         return Ok(bookings);
     }
+    
+    [HttpGet("all/haulier/{id}")]
+    public async Task<IActionResult> GetAllBookingsByHaulier(string id)
+    {
+        var bookings = await _bookingService.GetAllBookingsByHaulier(id);
+        return Ok(bookings);
+    }
 }

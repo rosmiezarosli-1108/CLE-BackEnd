@@ -90,7 +90,7 @@ public class ContainerController : ControllerBase
     [HttpGet("all/haulier/{id}")]
     public async Task<IActionResult> GetAllContainersByHaulier(string id)
     {
-        var containers = await _containerService.GetAllContainersByForwarding(id);
+        var containers = await _containerService.GetAllContainersByHaulier(id);
         return Ok(containers);
     }
 }
