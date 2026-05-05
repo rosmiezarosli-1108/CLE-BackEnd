@@ -40,7 +40,7 @@ public class PrimeMoverService : IPrimeMoverService
     public async Task<PrimeMoverDto> CreateAsync(PrimeMoverCreateDto dto)
     {
         var primeMoverExists = await _dbContext.PrimeMovers.AnyAsync(p => p.PlateNumber == dto.PlateNumber && p.PMCode == dto.PMCode);
-        if (!primeMoverExists) throw new Exception("Prime Mover already exist.");
+        if (primeMoverExists) throw new Exception("Prime Mover already exist.");
         
         var PrimeMover = new Models.PrimeMover
         {

@@ -39,7 +39,7 @@ public class DriverService : IDriverService
     public async Task<DriverDto> CreateAsync(DriverCreateDto dto)
     {
         var driverExists = await _dbContext.Drivers.AnyAsync(d => d.Name == dto.Name && d.ICNumber == dto.ICNumber);
-        if (!driverExists) throw new Exception("Driver already exist.");
+        if (driverExists) throw new Exception("Driver already exist.");
         
         var Driver = new Models.Driver
         {

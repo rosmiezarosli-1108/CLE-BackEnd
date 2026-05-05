@@ -38,7 +38,7 @@ public class TrailerService : ITrailerService
     public async Task<TrailerDto> CreateAsync(TrailerCreateDto dto)
     {
         var trailerExists = await _dbContext.Trailers.AnyAsync(t => t.PlateNumber == dto.PlateNumber && t.Type == dto.Type);
-        if (!trailerExists) throw new Exception("Trailer already exist.");
+        if (trailerExists) throw new Exception("Trailer already exist.");
         
         var Trailer = new Models.Trailer
         {

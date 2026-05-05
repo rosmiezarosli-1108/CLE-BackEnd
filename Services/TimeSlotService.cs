@@ -39,7 +39,7 @@ public class TimeSlotService : ITimeSlotService
     public async Task<TimeSlotDto> CreateAsync(TimeSlotCreateDto dto)
     {
         var timeSlotExists = await _dbContext.TimeSlots.AnyAsync(t => t.Date == dto.Date && t.Time == dto.Time);
-        if (!timeSlotExists) throw new Exception("Timeslot already exist.");
+        if (timeSlotExists) throw new Exception("Timeslot already exist.");
         
         var TimeSlot = new Models.TimeSlot
         {
