@@ -8,7 +8,7 @@ public class TimeSlotDto
     public Guid Id { get; set; }
     public DateOnly Date { get; set; }
     public string Time { get; set; } = string.Empty;
-    public string? TotalSlot { get; set; }
+    public int? TotalSlot { get; set; }
     public string DepotId { get; set; } = string.Empty;
     public Models.Company? Depot { get; set; }
 }
@@ -21,7 +21,7 @@ public class TimeSlotCreateDto
     [Required]
     public string Time { get; set; } = string.Empty;
     
-    public string? TotalSlot { get; set; }
+    public int? TotalSlot { get; set; }
     
     [Required]
     public string DepotId { get; set; } = string.Empty;
@@ -38,7 +38,7 @@ public class TimeSlotUpdateDto
     [Required]
     public string Time { get; set; } = string.Empty;
     
-    public string? TotalSlot { get; set; }
+    public int? TotalSlot { get; set; }
     
     [Required]
     public string DepotId { get; set; } = string.Empty;

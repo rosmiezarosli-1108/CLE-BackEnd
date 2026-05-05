@@ -14,7 +14,7 @@ public class TimeSlot
     [Required]
     public string Time { get; set; } = string.Empty;
     
-    public string? TotalSlot { get; set; }
+    public int? TotalSlot { get; set; }
     
     [Required]
     public string DepotId { get; set; } = string.Empty;
