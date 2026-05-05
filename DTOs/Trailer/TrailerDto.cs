@@ -9,6 +9,7 @@ public class TrailerDto
     public string Type { get; set; } = string.Empty;
     public string? BTM { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public string HaulierId { get; set; } = string.Empty;
 }
 
 public class TrailerCreateDto
@@ -22,6 +23,9 @@ public class TrailerCreateDto
     public string? BTM { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }
 
 public class TrailerUpdateDto
@@ -38,4 +42,7 @@ public class TrailerUpdateDto
     public string? BTM { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CLE_BackEnd.Models;
 
@@ -19,4 +20,8 @@ public class Driver
     public string? MobileNumber { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
+    
 }

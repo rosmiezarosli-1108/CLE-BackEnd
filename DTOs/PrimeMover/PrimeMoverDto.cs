@@ -11,6 +11,7 @@ public class PrimeMoverDto
     public string? BGK { get; set; }
     public string? DefaultDriver { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public string HaulierId { get; set; } = string.Empty;
 }
 
 public class PrimeMoverCreateDto
@@ -28,6 +29,9 @@ public class PrimeMoverCreateDto
     public string? DefaultDriver { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }
 
 public class PrimeMoverUpdateDto
@@ -48,4 +52,7 @@ public class PrimeMoverUpdateDto
     public string? DefaultDriver { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }

@@ -10,6 +10,7 @@ public class DriverDto
     public string EmailAddress { get; set; } =  string.Empty;
     public string? MobileNumber { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public string HaulierId { get; set; } = string.Empty;
 }
 
 public class DriverCreateDto
@@ -26,6 +27,9 @@ public class DriverCreateDto
     public string? MobileNumber { get; set; }
     
     public DateTime? UpdatedAt { get; set; }   
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }
 
 public class DriverUpdateDto
@@ -45,4 +49,7 @@ public class DriverUpdateDto
     public string? MobileNumber { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }

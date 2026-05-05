@@ -449,6 +449,10 @@ namespace CLE_BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("HaulierId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ICNumber")
                         .IsRequired()
                         .HasColumnType("text");
@@ -481,6 +485,10 @@ namespace CLE_BackEnd.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("DefaultDriver")
+                        .HasColumnType("text");
+
+                    b.Property<string>("HaulierId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PMCode")
@@ -533,6 +541,10 @@ namespace CLE_BackEnd.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("BTM")
+                        .HasColumnType("text");
+
+                    b.Property<string>("HaulierId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PlateNumber")
