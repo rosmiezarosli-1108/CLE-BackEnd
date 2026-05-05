@@ -33,31 +33,39 @@ namespace CLE_BackEnd.Migrations
                     b.Property<int>("ContainerId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("DriverName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("HaulierId")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PMNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("PMId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ROTNumber")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("TimeSlot")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("TimeSlotId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TrailerId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContainerId");
 
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("PMId");
+
                     b.HasIndex("ROTNumber");
+
+                    b.HasIndex("TimeSlotId");
+
+                    b.HasIndex("TrailerId");
 
                     b.ToTable("AssignedHauliers");
                 });
@@ -658,15 +666,45 @@ namespace CLE_BackEnd.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CLE_BackEnd.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CLE_BackEnd.Models.PrimeMover", "PrimeMover")
+                        .WithMany()
+                        .HasForeignKey("PMId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CLE_BackEnd.Models.Booking", "Booking")
                         .WithMany()
                         .HasForeignKey("ROTNumber")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CLE_BackEnd.Models.TimeSlot", "TimeSlot")
+                        .WithMany()
+                        .HasForeignKey("TimeSlotId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CLE_BackEnd.Models.Trailer", "Trailer")
+                        .WithMany()
+                        .HasForeignKey("TrailerId");
+
                     b.Navigation("Booking");
 
                     b.Navigation("Container");
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("PrimeMover");
+
+                    b.Navigation("TimeSlot");
+
+                    b.Navigation("Trailer");
                 });
 
             modelBuilder.Entity("CLE_BackEnd.Models.Booking", b =>
