@@ -31,6 +31,7 @@ public class ContainerDto
     public string Status { get; set; } = string.Empty;
     public DateTime AssignedTime { get; set; }
     public DateTime? EnrouteTime { get; set; }
+    public DateTime? AcceptedTime { get; set; }
     public DateTime? GatedInTime { get; set; }
     public DateTime? GatedOutTime { get; set; }
     public DateTime? DeliveredTime { get; set; }
@@ -38,6 +39,7 @@ public class ContainerDto
     public DateTime? RejectedTime { get; set; }
     public DateTime? DeletedTime { get; set; }
     public DateTime? RTAssignedTime { get; set; }
+    public DateTime? RTAcceptedTime { get; set; }
     public DateTime? RTEnrouteTime { get; set; }
     public DateTime? RTGatedInTime { get; set; }
     public DateTime? RTGatedOutTime { get; set; }
@@ -117,6 +119,7 @@ public class ContainerUpdateDto
     public string? Status { get; set; } = string.Empty;
     public DateTime AssignedTime { get; set; }
     public DateTime? EnrouteTime { get; set; }
+    public DateTime? AcceptedTime { get; set; }
     public DateTime? GatedInTime { get; set; }
     public DateTime? GatedOutTime { get; set; }
     public DateTime? DeliveredTime { get; set; }
@@ -126,6 +129,7 @@ public class ContainerUpdateDto
     public string? DeletedRemarks { get; set; }
     public DateTime? RTAssignedTime { get; set; }
     public DateTime? RTEnrouteTime { get; set; }
+    public DateTime? RTAcceptedTime { get; set; }
     public DateTime? RTGatedInTime { get; set; }
     public DateTime? RTGatedOutTime { get; set; }
     public DateTime? RTDeliveredTime { get; set; }

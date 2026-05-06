@@ -79,4 +79,13 @@ public class AssignedHaulierController : ControllerBase
         }
         return NoContent();
     }
+    
+    [HttpGet("container/{id}")]
+    public async Task<IActionResult> GetAssignedHaulierByContainerId(int id)
+    {
+        var assignedHaulier = await _assignedHaulierService.GetAssignedHaulierByContainerId(id);
+        if (assignedHaulier == null)
+            return NotFound(new{ message = $"Assigned Haulier with container ID of {id} not found" });
+        return Ok(assignedHaulier);
+    }
 }

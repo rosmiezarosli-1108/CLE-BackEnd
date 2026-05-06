@@ -3,6 +3,7 @@ using System;
 using CLE_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CLE_BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260505092351_AddHaulierId")]
+    partial class AddHaulierId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,9 +302,6 @@ namespace CLE_BackEnd.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContainerId"));
 
-                    b.Property<DateTime?>("AcceptedTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTime>("AssignedTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -366,9 +366,6 @@ namespace CLE_BackEnd.Migrations
                     b.Property<string>("ROTNumber")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<DateTime?>("RTAcceptedTime")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("RTAssignedTime")
                         .HasColumnType("timestamp with time zone");
@@ -530,8 +527,8 @@ namespace CLE_BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("TotalSlot")
-                        .HasColumnType("integer");
+                    b.Property<string>("TotalSlot")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

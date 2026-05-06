@@ -16,4 +16,7 @@ public class Trailer
     public string? BTM { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }

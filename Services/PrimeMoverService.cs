@@ -18,6 +18,7 @@ public class PrimeMoverService : IPrimeMoverService
         BGK =  PrimeMover.BGK,
         DefaultDriver =  PrimeMover.DefaultDriver,
         UpdatedAt = PrimeMover.UpdatedAt,
+        HaulierId = PrimeMover.HaulierId,
     };
     
     public PrimeMoverService(ApplicationDbContext dbContext)
@@ -50,6 +51,7 @@ public class PrimeMoverService : IPrimeMoverService
             BTM = dto.BTM,
             DefaultDriver =  dto.DefaultDriver,
             UpdatedAt = dto.UpdatedAt,
+            HaulierId = dto.HaulierId
         };
         await _dbContext.PrimeMovers.AddAsync(PrimeMover);
         await _dbContext.SaveChangesAsync();
@@ -70,6 +72,7 @@ public class PrimeMoverService : IPrimeMoverService
         PrimeMover.BGK = dto.BGK;
         PrimeMover.DefaultDriver = dto.DefaultDriver;
         PrimeMover.UpdatedAt = dto.UpdatedAt;
+        PrimeMover.HaulierId = dto.HaulierId;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(PrimeMover.Id);

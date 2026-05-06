@@ -63,6 +63,8 @@ public class Container
     
     public DateTime? EnrouteTime { get; set; }
     
+    public DateTime? AcceptedTime { get; set; }
+    
     public DateTime? GatedInTime { get; set; }
     
     public DateTime? GatedOutTime { get; set; }
@@ -78,6 +80,8 @@ public class Container
     public DateTime? RTAssignedTime { get; set; }
     
     public DateTime? RTEnrouteTime { get; set; }
+    
+    public DateTime? RTAcceptedTime { get; set; }
     
     public DateTime? RTGatedInTime { get; set; }
     

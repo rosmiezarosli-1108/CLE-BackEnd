@@ -16,6 +16,7 @@ public class TrailerService : ITrailerService
         Type = Trailer.Type,
         BTM = Trailer.BTM,
         UpdatedAt = Trailer.UpdatedAt,
+        HaulierId = Trailer.HaulierId,
     };
     
     public TrailerService(ApplicationDbContext dbContext)
@@ -46,6 +47,7 @@ public class TrailerService : ITrailerService
             Type = dto.Type,
             BTM = dto.BTM,
             UpdatedAt = dto.UpdatedAt,
+            HaulierId = dto.HaulierId
         };
         await _dbContext.Trailers.AddAsync(Trailer);
         await _dbContext.SaveChangesAsync();
@@ -64,6 +66,7 @@ public class TrailerService : ITrailerService
         Trailer.Type = dto.Type;
         Trailer.BTM = dto.BTM;
         Trailer.UpdatedAt = dto.UpdatedAt;
+        Trailer.HaulierId = dto.HaulierId;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(Trailer.Id);

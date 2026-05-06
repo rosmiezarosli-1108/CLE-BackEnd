@@ -9,13 +9,27 @@ public class AssignedHaulier
     public int Id { get; set; }
 
     [Required] 
-    public string DriverName { get; set; } = string.Empty;
+    public Guid DriverId { get; set; }
+    
+    [ForeignKey("DriverId")]
+    public virtual Driver? Driver { get; set; }
 
     [Required] 
-    public string PMNumber { get; set; } = string.Empty;
+    public Guid PMId { get; set; }
+    
+    [ForeignKey("PMId")]
+    public virtual PrimeMover? PrimeMover { get; set; }
 
     [Required] 
-    public string TimeSlot { get; set; } = string.Empty;
+    public Guid TimeSlotId { get; set; }
+    
+    [ForeignKey("TimeSlotId")]
+    public virtual TimeSlot? TimeSlot { get; set; }
+    
+    public Guid? TrailerId { get; set; }
+    
+    [ForeignKey("TrailerId")]
+    public virtual Trailer? Trailer { get; set; }
 
     [Required] 
     public int ContainerId { get; set; }

@@ -20,4 +20,7 @@ public class PrimeMover
     public string? DefaultDriver { get; set; }
     
     public DateTime? UpdatedAt { get; set; }
+    
+    [Required]
+    public string HaulierId { get; set; } = string.Empty;
 }

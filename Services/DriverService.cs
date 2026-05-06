@@ -17,6 +17,7 @@ public class DriverService : IDriverService
         MobileNumber = Driver.MobileNumber,
         EmailAddress =  Driver.EmailAddress,
         UpdatedAt = Driver.UpdatedAt,
+        HaulierId = Driver.HaulierId,
     };
     
     public DriverService(ApplicationDbContext dbContext)
@@ -48,6 +49,7 @@ public class DriverService : IDriverService
             EmailAddress = dto.EmailAddress,
             MobileNumber = dto.MobileNumber,
             UpdatedAt = dto.UpdatedAt,
+            HaulierId = dto.HaulierId
         };
         await _dbContext.Drivers.AddAsync(Driver);
         await _dbContext.SaveChangesAsync();
@@ -67,6 +69,7 @@ public class DriverService : IDriverService
         Driver.MobileNumber = dto.MobileNumber;
         Driver.EmailAddress = dto.EmailAddress;
         Driver.UpdatedAt = dto.UpdatedAt;
+        Driver.HaulierId = dto.HaulierId;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(Driver.Id);
