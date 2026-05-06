@@ -3057,25 +3057,31 @@
     ]
   },
   "packageFolders": {
-    "/Users/vimalraaj/.nuget/packages/": {}
+    "C:\\Users\\Surface Laptop 4\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/CLE BackEnd.csproj",
+      "projectUniqueName": "C:\\RiderProjects\\CLE-BackEnd\\CLE BackEnd.csproj",
       "projectName": "CLE BackEnd",
-      "projectPath": "/Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/CLE BackEnd.csproj",
-      "packagesPath": "/Users/vimalraaj/.nuget/packages/",
-      "outputPath": "/Users/vimalraaj/RiderProjects/CLE BackEnd/CLE BackEnd/obj/",
+      "projectPath": "C:\\RiderProjects\\CLE-BackEnd\\CLE BackEnd.csproj",
+      "packagesPath": "C:\\Users\\Surface Laptop 4\\.nuget\\packages\\",
+      "outputPath": "C:\\RiderProjects\\CLE-BackEnd\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/vimalraaj/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Surface Laptop 4\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3164,7 +3170,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
