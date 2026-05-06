@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CLE BackEnd")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24236fba1a495c7ad36f0c4506f884723682395d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4558a2556cb3a95d4b67eb28bd9500bf421d6e16")]
 [assembly: System.Reflection.AssemblyProductAttribute("CLE BackEnd")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CLE BackEnd")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
