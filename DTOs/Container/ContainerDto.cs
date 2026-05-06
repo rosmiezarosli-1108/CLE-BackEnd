@@ -51,6 +51,7 @@ public class ContainerDto
     public bool DGCReductionEligibility { get; set; }
     public double? DGCReduction { get; set; }
     public string? DeletedRemarks { get; set; }
+    public string? ReceivedBy { get; set; }
 }
 
 public class ContainerCreateDto
@@ -134,6 +135,7 @@ public class ContainerUpdateDto
     public DateTime? RTGatedOutTime { get; set; }
     public DateTime? RTDeliveredTime { get; set; }
     public DateTime? RTRFCTime { get; set; }
+    public string? ReceivedBy { get; set; }
 }
 
 public class ContainerAddressDto

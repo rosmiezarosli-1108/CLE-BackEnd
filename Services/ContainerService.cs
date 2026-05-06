@@ -59,6 +59,7 @@ public class ContainerService : IContainerService
         DGCReductionEligibility =  container.DGCReductionEligibility,
         DGCReduction =  container.DGCReduction,
         DeletedRemarks = container.DeletedRemarks,
+        ReceivedBy = container.ReceivedBy,
     };
     
     public ContainerService(ApplicationDbContext dbContext)
@@ -173,6 +174,7 @@ public class ContainerService : IContainerService
         container.RTDeliveredTime = dto.RTDeliveredTime;
         container.RTRFCTime = dto.RTRFCTime;
         container.DeletedRemarks = dto.DeletedRemarks;
+        container.ReceivedBy = dto.ReceivedBy;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(container.ContainerId);

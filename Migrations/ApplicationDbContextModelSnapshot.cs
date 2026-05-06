@@ -388,6 +388,9 @@ namespace CLE_BackEnd.Migrations
                     b.Property<DateTime?>("RTRFCTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ReceivedBy")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("RejectedTime")
                         .HasColumnType("timestamp with time zone");
 

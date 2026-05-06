@@ -102,4 +102,6 @@ public class Container
     public double? DGCReduction { get; set; }
     
     public string? DeletedRemarks { get; set; }
+    
+    public string? ReceivedBy { get; set; }
 }
