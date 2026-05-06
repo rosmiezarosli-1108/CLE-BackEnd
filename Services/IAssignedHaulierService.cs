@@ -9,4 +9,5 @@ public interface IAssignedHaulierService
     Task<AssignedHaulierDto> CreateAsync(AssignedHaulierCreateDto dto);
     Task<AssignedHaulierDto?> UpdateAsync(int id, AssignedHaulierUpdateDto dto);
     Task<bool> DeleteAsync(int id);
+    Task<AssignedHaulierDto?> GetAssignedHaulierByContainerId(int id);
 }

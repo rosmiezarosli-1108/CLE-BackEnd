@@ -299,6 +299,9 @@ namespace CLE_BackEnd.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContainerId"));
 
+                    b.Property<DateTime?>("AcceptedTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime>("AssignedTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -363,6 +366,9 @@ namespace CLE_BackEnd.Migrations
                     b.Property<string>("ROTNumber")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("RTAcceptedTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("RTAssignedTime")
                         .HasColumnType("timestamp with time zone");

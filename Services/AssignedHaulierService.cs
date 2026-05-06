@@ -104,4 +104,16 @@ public class AssignedHaulierService : IAssignedHaulierService
         await _dbContext.SaveChangesAsync();
         return true;
     }
+    
+    public async Task<AssignedHaulierDto?> GetAssignedHaulierByContainerId(int id)
+    {
+        var assignedHaulier = await _dbContext.AssignedHauliers
+            .Include(a => a.Driver)
+            .Include(a => a.PrimeMover)
+            .Include(a => a.TimeSlot)
+            .Include(a => a.Trailer)
+            .Where(a => a.ContainerId == id)
+            .FirstOrDefaultAsync();
+        return assignedHaulier == null? null : MapToDto(assignedHaulier);
+    }
 }
