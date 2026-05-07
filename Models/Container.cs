@@ -103,5 +103,9 @@ public class Container
     
     public string? DeletedRemarks { get; set; }
     
+    public string? RejectedRemarks { get; set; }
+
+    public virtual List<ContainerAudit> UpdateHistory { get; set; } = new List<ContainerAudit>();
+    
     public string? ReceivedBy { get; set; }
 }

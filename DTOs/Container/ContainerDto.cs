@@ -51,6 +51,8 @@ public class ContainerDto
     public bool DGCReductionEligibility { get; set; }
     public double? DGCReduction { get; set; }
     public string? DeletedRemarks { get; set; }
+    public string? RejectedRemarks { get; set; }
+    public List<ContainerAuditsDto> UpdateHistory { get; set; } = new List<ContainerAuditsDto>();
     public string? ReceivedBy { get; set; }
 }
 
@@ -136,10 +138,19 @@ public class ContainerUpdateDto
     public DateTime? RTGatedOutTime { get; set; }
     public DateTime? RTDeliveredTime { get; set; }
     public DateTime? RTRFCTime { get; set; }
+    public string? RejectedRemarks { get; set; }
+    public List<ContainerAuditsDto> UpdateHistory { get; set; } = new();
     public string? ReceivedBy { get; set; }
 }
 
 public class ContainerAddressDto
 {
     public string Address { get; set; } = string.Empty;
+}
+
+public class ContainerAuditsDto
+{
+    public string UpdatedBy { get; set; } = string.Empty;
+    public DateTime UpdatedTime { get; set; }
+    public string? Action { get; set; }
 }

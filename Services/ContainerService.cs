@@ -8,7 +8,7 @@ namespace CLE_BackEnd.Services;
 public class ContainerService : IContainerService
 {
     private readonly ApplicationDbContext _dbContext;
-
+    
     public static ContainerDto MapToDto(Container container) => new()
     {
         ContainerId = container.ContainerId,
@@ -59,6 +59,13 @@ public class ContainerService : IContainerService
         DGCReductionEligibility =  container.DGCReductionEligibility,
         DGCReduction =  container.DGCReduction,
         DeletedRemarks = container.DeletedRemarks,
+        RejectedRemarks = container.RejectedRemarks,
+        UpdateHistory = container.UpdateHistory?.Select(h => new ContainerAuditsDto
+        {
+            UpdatedBy = h.UpdatedBy,
+            UpdatedTime = h.UpdatedTime,
+            Action = h.Action,
+        }).OrderByDescending(h => h.UpdatedTime).ToList() ?? new List<ContainerAuditsDto>(),
         ReceivedBy = container.ReceivedBy,
     };
     
@@ -71,6 +78,7 @@ public class ContainerService : IContainerService
     {
         var containers = await _dbContext.Containers
             .Include(c => c.ToAddress)
+            .Include(c => c.UpdateHistory)
             .Include(c => c.ConsigneeCompany)  
             .Include(c => c.HaulierCompany)
             .Include(c => c.DepotCompany)
@@ -87,6 +95,7 @@ public class ContainerService : IContainerService
     {
         var container = await _dbContext.Containers
             .Include(c => c.ToAddress)
+            .Include(c => c.UpdateHistory)
             .Include(c => c.ConsigneeCompany)  
             .Include(c => c.HaulierCompany)
             .Include(c => c.DepotCompany)
@@ -131,10 +140,11 @@ public class ContainerService : IContainerService
         return await GetByIdAsync(container.ContainerId) ??  MapToDto(container);
     }
 
-    public async Task<ContainerDto?> UpdateAsync(int id, ContainerUpdateDto dto)
+    public async Task<ContainerDto?> UpdateAsync(int id, ContainerUpdateDto dto, string updatedBy)
     {
         var container = await _dbContext.Containers
             .Include(c => c.ToAddress)
+            .Include(c => c.UpdateHistory)
             .FirstOrDefaultAsync(c => c.ContainerId == id);
         if (container == null)
         {
@@ -175,7 +185,14 @@ public class ContainerService : IContainerService
         container.RTDeliveredTime = dto.RTDeliveredTime;
         container.RTRFCTime = dto.RTRFCTime;
         container.DeletedRemarks = dto.DeletedRemarks;
+        container.RejectedRemarks = dto.RejectedRemarks;
         container.ReceivedBy = dto.ReceivedBy;
+        container.UpdateHistory.Add(new ContainerAudit
+        {
+            UpdatedBy = updatedBy,
+            UpdatedTime = DateTime.UtcNow, 
+            Action = $"Container updated. Status: {dto.Status}"
+        });
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(container.ContainerId);
@@ -213,6 +230,7 @@ public class ContainerService : IContainerService
     {
         var containers = await _dbContext.Containers
             .Include(c => c.ToAddress)
+            .Include(c => c.UpdateHistory)
             .Include(c => c.ConsigneeCompany)  
             .Include(c => c.HaulierCompany)
             .Include(c => c.DepotCompany)
@@ -230,6 +248,7 @@ public class ContainerService : IContainerService
     {
         var containers = await _dbContext.Containers
             .Include(c => c.ToAddress)
+            .Include(c => c.UpdateHistory)
             .Include(c => c.ConsigneeCompany)  
             .Include(c => c.HaulierCompany)
             .Include(c => c.DepotCompany)

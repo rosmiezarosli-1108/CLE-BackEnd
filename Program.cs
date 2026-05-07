@@ -69,11 +69,11 @@ builder.Services.AddScoped<IContainerService, ContainerService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IPrimeMoverService, PrimeMoverService>();
 builder.Services.AddScoped<ITimeSlotService, TimeSlotService>();
 builder.Services.AddScoped<ITrailerService, TrailerService>();
+builder.Services.AddScoped<IContainerAuditService, ContainerAuditService>();
 
 var app = builder.Build();
 

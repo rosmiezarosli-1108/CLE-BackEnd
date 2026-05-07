@@ -52,14 +52,14 @@ public class ContainerController : ControllerBase
     }
     
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] ContainerUpdateDto dto)
+    public async Task<IActionResult> Update(int id, [FromBody] ContainerUpdateDto dto, string updatedBy)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            var container = await _containerService.UpdateAsync(id, dto);
+            var container = await _containerService.UpdateAsync(id, dto, updatedBy);
             return Ok(container);
         }
         catch (Exception ex)
