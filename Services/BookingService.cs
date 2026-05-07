@@ -66,8 +66,8 @@ public class BookingService : IBookingService
 
     public async Task<BookingDto> CreateAsync(BookingCreateDto dto)
     {
-        var existing = await _dbContext.Bookings.AnyAsync(b => b.BLOrBookingNumber == dto.BLOrBookingNumber);
-        if (existing) throw new Exception("BL/Booking Number already exists.");
+        var existing = await _dbContext.Bookings.AnyAsync(b => b.ROTNumber == dto.ROTNumber);
+        if (existing) throw new Exception("ROT Number already exists.");
         
         var booking = new Models.Booking
         {
@@ -138,6 +138,10 @@ public class BookingService : IBookingService
 
         //to remove the containers of the booking
         var bookingContainers = await _dbContext.Containers
+            .Where(c => c.ROTNumber == id).ToListAsync();
+        
+        //to remove the documents of the booking
+        var bookingDocuments = await _dbContext.BookingDocuments
             .Where(c => c.ROTNumber == id).ToListAsync();
         
         //to remove assignedHauliers and addressees

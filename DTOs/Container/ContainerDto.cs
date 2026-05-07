@@ -91,6 +91,7 @@ public class ContainerCreateDto
     
     [Required]
     public DateTime AssignedTime { get; set; }
+    public DateTime? EnrouteTime { get; set; }
     
     // public string? TimeStatus { get; set; }
     //

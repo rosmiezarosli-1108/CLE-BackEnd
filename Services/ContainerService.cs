@@ -122,8 +122,9 @@ public class ContainerService : IContainerService
                 Address = a.Address 
             }).ToList(),
             ROTNumber = dto.ROTNumber,
-            Status = "Assigned",
+            Status = dto.Status,
             AssignedTime = dto.AssignedTime,
+            EnrouteTime = dto.EnrouteTime,
         };
         await _dbContext.Containers.AddAsync(container);
         await _dbContext.SaveChangesAsync();
