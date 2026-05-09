@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<TimeSlot> TimeSlots { get; set; }
     public DbSet<Trailer> Trailers { get; set; }
     public DbSet<ContainerAudit> ContainerAudits { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
