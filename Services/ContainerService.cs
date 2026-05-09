@@ -205,6 +205,14 @@ public class ContainerService : IContainerService
         if (container == null)
             return false;
 
+        // Remove the Audit records of containers
+        var audits = await _dbContext.ContainerAudits
+            .Where(a => a.ContainerId == id).ToListAsync();
+        if (audits.Any())
+        {
+            _dbContext.ContainerAudits.RemoveRange(audits);
+        }
+        
         // Remove the Address records of containers
         var addresses = await _dbContext.ContainerAddresses
             .Where(a => a.ContainerId == id).ToListAsync();

@@ -94,7 +94,7 @@ public class BookingService : IBookingService
         };
         await _dbContext.Bookings.AddAsync(booking);
         await _dbContext.SaveChangesAsync();
-        return await GetByIdAsync(booking.BLOrBookingNumber) ??  MapToDto(booking);
+        return await GetByIdAsync(booking.ROTNumber) ??  MapToDto(booking);
     }
 
     public async Task<BookingDto?> UpdateAsync(string id, BookingUpdateDto dto)
@@ -126,7 +126,7 @@ public class BookingService : IBookingService
         booking.ContainerQuantity = dto.ContainerQuantity;
 
         await _dbContext.SaveChangesAsync();
-        return await GetByIdAsync(booking.BLOrBookingNumber);
+        return await GetByIdAsync(booking.ROTNumber);
     }
 
     public async Task<bool> DeleteAsync(string id)
