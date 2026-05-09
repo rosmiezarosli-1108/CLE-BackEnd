@@ -14,7 +14,8 @@ public class TimeSlotService : ITimeSlotService
         Id = TimeSlot.Id,
         Date = TimeSlot.Date,
         Time = TimeSlot.Time,
-        TotalSlot = TimeSlot.TotalSlot,
+        PickUpTotalSlot =  TimeSlot.PickUpTotalSlot,
+        DropOffTotalSlot = TimeSlot.DropOffTotalSlot,
         Depot =  TimeSlot.Depot,
         DepotId =  TimeSlot.DepotId,
     };
@@ -45,7 +46,8 @@ public class TimeSlotService : ITimeSlotService
         {
             Date = dto.Date,
             Time = dto.Time,
-            TotalSlot = dto.TotalSlot,
+            PickUpTotalSlot = dto.PickUpTotalSlot,
+            DropOffTotalSlot = dto.DropOffTotalSlot,
             DepotId = dto.DepotId,
         };
         await _dbContext.TimeSlots.AddAsync(TimeSlot);
@@ -63,7 +65,8 @@ public class TimeSlotService : ITimeSlotService
 
         TimeSlot.Date = dto.Date;
         TimeSlot.Time = dto.Time;
-        TimeSlot.TotalSlot = dto.TotalSlot;
+        TimeSlot.PickUpTotalSlot = dto.PickUpTotalSlot;
+        TimeSlot.DropOffTotalSlot = dto.DropOffTotalSlot;
         TimeSlot.DepotId = dto.DepotId;
 
         await _dbContext.SaveChangesAsync();

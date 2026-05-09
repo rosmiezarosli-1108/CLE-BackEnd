@@ -141,6 +141,7 @@ public class ContainerUpdateDto
     public string? RejectedRemarks { get; set; }
     public List<ContainerAuditsDto> UpdateHistory { get; set; } = new();
     public string? ReceivedBy { get; set; }
+    public string? UpdatedBy { get; set; } =  string.Empty;
 }
 
 public class ContainerAddressDto
