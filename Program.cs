@@ -74,6 +74,13 @@ builder.Services.AddScoped<IPrimeMoverService, PrimeMoverService>();
 builder.Services.AddScoped<ITimeSlotService, TimeSlotService>();
 builder.Services.AddScoped<ITrailerService, TrailerService>();
 builder.Services.AddScoped<IContainerAuditService, ContainerAuditService>();
+builder.Services.AddScoped<IAleContainerAuditService, AleContainerAuditService>();
+builder.Services.AddScoped<IAleContainerAddressService, AleContainerAddressService>();
+builder.Services.AddScoped<IAleContainerService, AleContainerService>();
+builder.Services.AddScoped<IAleBookingService, AleBookingService>();
+builder.Services.AddScoped<IAleBookingDocumentService, AleBookingDocumentService>();
+builder.Services.AddScoped < IAleAssignedHaulierService, AleAssignedHaulierService>();
+builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
 
 var app = builder.Build();
 

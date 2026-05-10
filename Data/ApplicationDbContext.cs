@@ -20,6 +20,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<TimeSlot> TimeSlots { get; set; }
     public DbSet<Trailer> Trailers { get; set; }
     public DbSet<ContainerAudit> ContainerAudits { get; set; }
+    public DbSet<AleContainerAudit> AleContainerAudits { get; set; }
+    public DbSet<AleContainer> AleContainers { get; set; }
+    public DbSet<AleContainerAddress> AleContainerAddresses { get; set; }
+    public DbSet<AleBooking> AleBookings { get; set; }
+    public DbSet<AleBookingDocument> AleBookingDocuments { get; set; }
+    public DbSet<AleAssignedHaulier> AleAssignedHauliers { get; set; }
+    public DbSet<AleTimeSlot> AleTimeSlots { get; set; }
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
