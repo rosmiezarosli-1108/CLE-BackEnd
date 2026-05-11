@@ -85,7 +85,7 @@ public class AleContainerService : IAleContainerService
             .Include(c => c.AleBooking)
                 .ThenInclude(b => b.ForwardingCompany) 
             .Include(c => c.AleBooking)
-                .ThenInclude(b => b.ShippingAgentCompany)
+                .ThenInclude(b => b.AirlineCompany)
             .ToListAsync();
         return aleContainers.Select(MapToDto);
     }
@@ -101,7 +101,7 @@ public class AleContainerService : IAleContainerService
             .Include(c => c.AleBooking)
                 .ThenInclude(b => b.ForwardingCompany) 
             .Include(c => c.AleBooking)
-                .ThenInclude(b => b.ShippingAgentCompany)
+                .ThenInclude(b => b.AirlineCompany)
             .FirstOrDefaultAsync(c => c.ContainerId == id);
         return aleContainer == null? null : MapToDto(aleContainer);
     }
@@ -244,7 +244,7 @@ public class AleContainerService : IAleContainerService
             .Include(c => c.AleBooking)
                 .ThenInclude(b => b.ForwardingCompany) 
             .Include(c => c.AleBooking)
-                .ThenInclude(b => b.ShippingAgentCompany)
+                .ThenInclude(b => b.AirlineCompany)
             .Where(c => c.AleBooking.ForwardingId == forwarderId)
             .ToListAsync();
         return aleContainers.Select(MapToDto);
@@ -261,7 +261,7 @@ public class AleContainerService : IAleContainerService
             .Include(c => c.AleBooking)
             .ThenInclude(b => b.ForwardingCompany) 
             .Include(c => c.AleBooking)
-            .ThenInclude(b => b.ShippingAgentCompany)
+            .ThenInclude(b => b.AirlineCompany)
             .Where(c => c.HaulierId == haulierId)
             .ToListAsync();
         return aleContainers.Select(MapToDto);

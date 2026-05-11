@@ -23,9 +23,9 @@ public class AleBookingDto
     public Models.Company? Forwarding { get; set; }
     public string ForwardingName {get; set; } = string.Empty;
     public string HaulierName {get; set; } = string.Empty;
-    public string ShippingAgentId { get; set; } = string.Empty;
-    public Models.Company? ShippingAgent { get; set; }
-    public string ShippingAgentName { get; set; } = string.Empty;
+    public string AirlineId { get; set; } = string.Empty;
+    public Models.Company? Airline { get; set; }
+    public string AirlineName { get; set; } = string.Empty;
     public string BillingParty { get; set; } = string.Empty;
     public string? CustomFormNo { get; set; }
     public string? CustomReceiptNo { get; set; }
@@ -67,7 +67,7 @@ public class AleBookingCreateDto
     public string ForwardingId { get; set; } = string.Empty;
 
     [Required]
-    public string ShippingAgentId { get; set; } = string.Empty;
+    public string AirlineId { get; set; } = string.Empty;
 
     [Required]
     public string BillingParty { get; set; } = string.Empty;

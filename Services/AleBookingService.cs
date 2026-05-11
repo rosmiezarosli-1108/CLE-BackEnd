@@ -30,9 +30,9 @@ public class AleBookingService : IAleBookingService
         ForwardingId = aleBooking.ForwardingId,
         Forwarding = aleBooking.ForwardingCompany,
         ForwardingName = aleBooking.ForwardingCompany?.CompanyName ?? "Unknown",
-        ShippingAgentId = aleBooking.ShippingAgentId,
-        ShippingAgent = aleBooking.ShippingAgentCompany,
-        ShippingAgentName = aleBooking.ShippingAgentCompany?.CompanyName ?? "Unknown",
+        AirlineId = aleBooking.AirlineId,
+        Airline = aleBooking.AirlineCompany,
+        AirlineName = aleBooking.AirlineCompany?.CompanyName ?? "Unknown",
         BillingParty = aleBooking.BillingParty,
         CustomFormNo = aleBooking.CustomFormNo,
         CustomReceiptNo =  aleBooking.CustomReceiptNo,
@@ -50,7 +50,7 @@ public class AleBookingService : IAleBookingService
     {
         var aleBookings = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)       
-            .Include(b => b.ShippingAgentCompany)   
+            .Include(b => b.AirlineCompany)   
             .ToListAsync();
         return aleBookings.Select(MapToDto);
     }
@@ -59,7 +59,7 @@ public class AleBookingService : IAleBookingService
     {
         var aleBooking = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)
-            .Include(b => b.ShippingAgentCompany)
+            .Include(b => b.AirlineCompany)
             
             .FirstOrDefaultAsync(b => b.ROTNumber == id);
         return aleBooking == null? null : MapToDto(aleBooking);
@@ -85,7 +85,7 @@ public class AleBookingService : IAleBookingService
             HaulierRemarks = dto.HaulierRemarks,
             TerminalRemarks = dto.TerminalRemarks,
             ForwardingId = dto.ForwardingId,
-            ShippingAgentId = dto.ShippingAgentId,
+            AirlineId = dto.AirlineId,
             BillingParty = dto.BillingParty,
             CustomFormNo = dto.CustomFormNo,
             CustomReceiptNo = dto.CustomReceiptNo,
@@ -118,7 +118,7 @@ public class AleBookingService : IAleBookingService
         aleBooking.HaulierRemarks = dto.HaulierRemarks;
         aleBooking.TerminalRemarks = dto.TerminalRemarks;
         aleBooking.ForwardingId = dto.ForwardingId;
-        aleBooking.ShippingAgentId = dto.ShippingAgentId;
+        aleBooking.AirlineId = dto.AirlineId;
         aleBooking.BillingParty = dto.BillingParty;
         aleBooking.CustomFormNo = dto.CustomFormNo;
         aleBooking.CustomReceiptNo = dto.CustomReceiptNo;
@@ -172,7 +172,7 @@ public class AleBookingService : IAleBookingService
     {
         var aleBookings = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)       
-            .Include(b => b.ShippingAgentCompany)
+            .Include(b => b.AirlineCompany)
             .Where(b => b.ForwardingId == forwarderId)
             .ToListAsync();
         return aleBookings.Select(MapToDto);
@@ -182,7 +182,7 @@ public class AleBookingService : IAleBookingService
     {
         var aleBookings = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)       
-            .Include(b => b.ShippingAgentCompany)
+            .Include(b => b.AirlineCompany)
             .Where(b => b.ForwardingId == haulierId)
             .ToListAsync();
         return aleBookings.Select(MapToDto);

@@ -46,10 +46,10 @@ public class AleBooking
     public virtual Company? ForwardingCompany { get; set; }
    
     [Required]
-    public string ShippingAgentId { get; set; } = string.Empty;
+    public string AirlineId { get; set; } = string.Empty;
     
-    [ForeignKey("ShippingAgentId")]
-    public virtual Company? ShippingAgentCompany { get; set; }
+    [ForeignKey("AirlineId")]
+    public virtual Company? AirlineCompany { get; set; }
     
     [Required]
     public string BillingParty { get; set; } = string.Empty;
