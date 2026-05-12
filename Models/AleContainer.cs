@@ -110,6 +110,18 @@ public class AleContainer
     
     public DateTime? ApprovedBothTime { get; set; }
     
+    public DateTime? RejectedBothTime { get; set; }
+    
+    public DateTime? ExamineBothTime { get; set; }
+    
+    public DateTime? ExamineAKPSTime { get; set; }
+    
+    public DateTime? ExamineCustomTime { get; set; }
+    
+    public DateTime? RejectedCustomTime { get; set; }
+    
+    public DateTime? RejectedAKPSTime { get; set; }
+    
     public string? EditRemarks { get; set; }
     
     public string? PackageQuantity { get; set; }

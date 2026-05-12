@@ -55,6 +55,12 @@ public class AleContainerDto
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
+    public DateTime? ExamineBothTime { get; set; }
+    public DateTime? ExamineAKPSTime { get; set; }
+    public DateTime? ExamineCustomTime { get; set; }
+    public DateTime? RejectedAKPSTime { get; set; }
+    public DateTime? RejectedCustomTime { get; set; }
+    public DateTime? RejectedBothTime { get; set; }
     public string? EditRemarks { get; set; }
     public string? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }
@@ -97,9 +103,7 @@ public class AleContainerCreateDto
     public DateTime AssignedTime { get; set; }
     
     public DateTime? EnrouteTime { get; set; }
-    
     public string? PackageQuantity { get; set; }
-
     public string? VolumeMetricWeight { get; set; }
 }
 
@@ -140,7 +144,12 @@ public class AleContainerUpdateDto
     public string? UpdatedBy { get; set; } =  string.Empty;
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
-    public DateTime? ApprovedBothTime { get; set; } 
+    public DateTime? ApprovedBothTime { get; set; }
+    public DateTime? ExamineAKPSTime { get; set; }
+    public DateTime? ExamineCustomTime { get; set; }
+    public DateTime? RejectedAKPSTime { get; set; }
+    public DateTime? RejectedCustomTime { get; set; }
+    public DateTime? RejectedBothTime { get; set; }
     public string? EditRemarks { get; set; }
     public string? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }

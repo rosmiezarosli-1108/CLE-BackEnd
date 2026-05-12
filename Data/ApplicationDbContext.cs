@@ -41,6 +41,11 @@ public class ApplicationDbContext : DbContext
             fk.DeleteBehavior = DeleteBehavior.Restrict;
         }
         
+        modelBuilder.Entity<AleContainerAudit>()
+            .HasOne<AleContainer>()
+            .WithMany(c => c.UpdateHistory)
+            .HasForeignKey(a => a.ContainerId); // Force it to use ContainerId instead of AleContainerContainerId
+        
         modelBuilder.Entity<Company>().HasData(
             new Company
             {
