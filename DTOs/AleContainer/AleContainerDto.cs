@@ -52,9 +52,23 @@ public class AleContainerDto
     public string? RejectedRemarks { get; set; }
     public List <AleContainerAuditsDto> UpdateHistory { get; set; } = new List<AleContainerAuditsDto>();
     public string? ReceivedBy { get; set; }
+    
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
+    
+    
+    public DateTime? TerminalGatedInTime { get; set; }
+    public DateTime? TerminalGatedOutTime { get; set; }
+    public string? TerminalStatus { get; set; }
+    
+    public DateTime? CustomAcceptedTime { get; set; }
+    public DateTime? CustomRejectedTime { get; set; }
+    public string? CustomStatus { get; set; }
+
+    public DateTime? AKPSAcceptedTime { get; set; }
+    public DateTime? AKPSRejectedTime { get; set; }
+    public string? AKPSStatus { get; set; }
 }
 
 public class AleContainerCreateDto
@@ -134,6 +148,18 @@ public class AleContainerUpdateDto
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
+    
+    public DateTime? TerminalGatedInTime { get; set; }
+    public DateTime? TerminalGatedOutTime { get; set; }
+    public string? TerminalStatus { get; set; }
+    
+    public DateTime? CustomAcceptedTime { get; set; }
+    public DateTime? CustomRejectedTime { get; set; }
+    public string? CustomStatus { get; set; }
+
+    public DateTime? AKPSAcceptedTime { get; set; }
+    public DateTime? AKPSRejectedTime { get; set; }
+    public string? AKPSStatus { get; set; }
 }
 
 public class AleContainerAddressDto

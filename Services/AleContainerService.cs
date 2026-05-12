@@ -67,6 +67,15 @@ public class AleContainerService : IAleContainerService
         ApprovedCustomsTime = aleContainer.ApprovedCustomsTime,
         ApprovedAKPSTime = aleContainer.ApprovedAKPSTime,
         ApprovedBothTime = aleContainer.ApprovedBothTime,
+        TerminalGatedInTime = aleContainer.TerminalGatedInTime,
+        TerminalGatedOutTime = aleContainer.TerminalGatedOutTime,
+        TerminalStatus = aleContainer.TerminalStatus,
+        CustomStatus = aleContainer.CustomStatus,
+        CustomAcceptedTime = aleContainer.CustomAcceptedTime,
+        CustomRejectedTime = aleContainer.CustomRejectedTime,
+        AKPSAcceptedTime = aleContainer.AKPSAcceptedTime,
+        AKPSRejectedTime = aleContainer.AKPSRejectedTime,
+        AKPSStatus = aleContainer.AKPSStatus,
     };
     
     public AleContainerService(ApplicationDbContext dbContext)
@@ -192,6 +201,15 @@ public class AleContainerService : IAleContainerService
         aleContainer.ApprovedAKPSTime = dto.ApprovedAKPSTime;
         aleContainer.ApprovedCustomsTime = dto.ApprovedCustomsTime;
         aleContainer.ApprovedBothTime = dto.ApprovedBothTime;
+        aleContainer.TerminalStatus = dto.TerminalStatus;
+        aleContainer.TerminalGatedInTime = dto.TerminalGatedInTime;
+        aleContainer.TerminalGatedOutTime = dto.TerminalGatedOutTime;
+        aleContainer.AKPSStatus = dto.AKPSStatus;
+        aleContainer.AKPSAcceptedTime = dto.AKPSAcceptedTime;
+        aleContainer.AKPSRejectedTime = dto.AKPSRejectedTime;
+        aleContainer.CustomStatus = dto.CustomStatus;
+        aleContainer.CustomAcceptedTime = dto.CustomAcceptedTime;
+        aleContainer.CustomRejectedTime = dto.CustomRejectedTime;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleContainer.ContainerId);
