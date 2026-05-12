@@ -55,6 +55,9 @@ public class AleContainerDto
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
+    public string? EditRemarks { get; set; }
+    public string? PackageQuantity { get; set; }
+    public string? VolumeMetricWeight { get; set; }
 }
 
 public class AleContainerCreateDto
@@ -94,6 +97,10 @@ public class AleContainerCreateDto
     public DateTime AssignedTime { get; set; }
     
     public DateTime? EnrouteTime { get; set; }
+    
+    public string? PackageQuantity { get; set; }
+
+    public string? VolumeMetricWeight { get; set; }
 }
 
 public class AleContainerUpdateDto
@@ -133,7 +140,10 @@ public class AleContainerUpdateDto
     public string? UpdatedBy { get; set; } =  string.Empty;
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
-    public DateTime? ApprovedBothTime { get; set; }
+    public DateTime? ApprovedBothTime { get; set; } 
+    public string? EditRemarks { get; set; }
+    public string? PackageQuantity { get; set; }
+    public string? VolumeMetricWeight { get; set; }
 }
 
 public class AleContainerAddressDto

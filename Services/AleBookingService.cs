@@ -18,7 +18,7 @@ public class AleBookingService : IAleBookingService
         HouseAWBNumber =  aleBooking.HouseAWBNumber,
         MovementType = aleBooking.MovementType,
         TripType = aleBooking.TripType,
-        SCN = aleBooking.SCN,
+        FlightNumber = aleBooking.FlightNumber,
         TerminalLocation = aleBooking.TerminalLocation,
         Terminal = aleBooking.TerminalCompany,
         TerminalLocationName = aleBooking.TerminalCompany?.CompanyName ?? "Unknown",
@@ -34,11 +34,12 @@ public class AleBookingService : IAleBookingService
         Airline = aleBooking.AirlineCompany,
         AirlineName = aleBooking.AirlineCompany?.CompanyName ?? "Unknown",
         BillingParty = aleBooking.BillingParty,
+        CustomFormType =  aleBooking.CustomFormType,
         CustomFormNo = aleBooking.CustomFormNo,
         CustomReceiptNo =  aleBooking.CustomReceiptNo,
         DICNumber =  aleBooking.DICNumber,
         ZBNumber =  aleBooking.ZBNumber,
-        ContainerQuantity =  aleBooking.ContainerQuantity,
+        TruckQuantity = aleBooking.TruckQuantity,
     };
     
     public AleBookingService(ApplicationDbContext dbContext)
@@ -77,7 +78,7 @@ public class AleBookingService : IAleBookingService
             HouseAWBNumber =  dto.HouseAWBNumber,
             MovementType = dto.MovementType,
             TripType = dto.TripType,
-            SCN =  dto.SCN,
+            FlightNumber =  dto.FlightNumber,
             TerminalLocation = dto.TerminalLocation,
             ETA = dto.ETA,
             SealNumber = dto.SealNumber,
@@ -87,11 +88,12 @@ public class AleBookingService : IAleBookingService
             ForwardingId = dto.ForwardingId,
             AirlineId = dto.AirlineId,
             BillingParty = dto.BillingParty,
+            CustomFormType = dto.CustomFormType,
             CustomFormNo = dto.CustomFormNo,
             CustomReceiptNo = dto.CustomReceiptNo,
             DICNumber = dto.DICNumber,
             ZBNumber = dto.ZBNumber,
-            ContainerQuantity = dto.ContainerQuantity,
+            TruckQuantity = dto.TruckQuantity,
         };
         await _dbContext.AleBookings.AddAsync(aleBooking);
         await _dbContext.SaveChangesAsync();
@@ -110,7 +112,7 @@ public class AleBookingService : IAleBookingService
         aleBooking.HouseAWBNumber = dto.HouseAWBNumber;
         aleBooking.MovementType = dto.MovementType;
         aleBooking.TripType = dto.TripType;
-        aleBooking.SCN =  dto.SCN;
+        aleBooking.FlightNumber = dto.FlightNumber;
         aleBooking.TerminalLocation = dto.TerminalLocation;
         aleBooking.ETA = dto.ETA;
         aleBooking.SealNumber = dto.SealNumber;
@@ -120,11 +122,12 @@ public class AleBookingService : IAleBookingService
         aleBooking.ForwardingId = dto.ForwardingId;
         aleBooking.AirlineId = dto.AirlineId;
         aleBooking.BillingParty = dto.BillingParty;
+        aleBooking.CustomFormType = dto.CustomFormType;
         aleBooking.CustomFormNo = dto.CustomFormNo;
         aleBooking.CustomReceiptNo = dto.CustomReceiptNo;
         aleBooking.DICNumber = dto.DICNumber;
         aleBooking.ZBNumber = dto.ZBNumber;
-        aleBooking.ContainerQuantity = dto.ContainerQuantity;
+        aleBooking.TruckQuantity = dto.TruckQuantity;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleBooking.ROTNumber);

@@ -109,4 +109,10 @@ public class AleContainer
     public DateTime? ApprovedCustomsTime { get; set; }
     
     public DateTime? ApprovedBothTime { get; set; }
+    
+    public string? EditRemarks { get; set; }
+    
+    public string? PackageQuantity { get; set; }
+
+    public string? VolumeMetricWeight { get; set; }
 }

@@ -67,6 +67,9 @@ public class AleContainerService : IAleContainerService
         ApprovedCustomsTime = aleContainer.ApprovedCustomsTime,
         ApprovedAKPSTime = aleContainer.ApprovedAKPSTime,
         ApprovedBothTime = aleContainer.ApprovedBothTime,
+        EditRemarks =  aleContainer.EditRemarks,
+        PackageQuantity =  aleContainer.PackageQuantity,
+        VolumeMetricWeight = aleContainer.VolumeMetricWeight,
     };
     
     public AleContainerService(ApplicationDbContext dbContext)
@@ -131,6 +134,8 @@ public class AleContainerService : IAleContainerService
             Status = dto.Status,
             AssignedTime = dto.AssignedTime,
             EnrouteTime = dto.EnrouteTime,
+            PackageQuantity = dto.PackageQuantity,
+            VolumeMetricWeight = dto.VolumeMetricWeight,
         };
         await _dbContext.AleContainers.AddAsync(aleContainer);
         await _dbContext.SaveChangesAsync();
@@ -192,6 +197,9 @@ public class AleContainerService : IAleContainerService
         aleContainer.ApprovedAKPSTime = dto.ApprovedAKPSTime;
         aleContainer.ApprovedCustomsTime = dto.ApprovedCustomsTime;
         aleContainer.ApprovedBothTime = dto.ApprovedBothTime;
+        aleContainer.EditRemarks = dto.EditRemarks;
+        aleContainer.PackageQuantity =  dto.PackageQuantity;
+        aleContainer.VolumeMetricWeight = dto.VolumeMetricWeight;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleContainer.ContainerId);

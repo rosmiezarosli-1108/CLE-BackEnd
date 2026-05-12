@@ -18,7 +18,7 @@ public class AleBooking
     public string MovementType { get; set; } = string.Empty;
     
     [Required]
-    public string SCN { get; set; } = string.Empty;
+    public string FlightNumber { get; set; } = string.Empty;
     
     public string? TripType { get; set; }
     
@@ -54,6 +54,8 @@ public class AleBooking
     [Required]
     public string BillingParty { get; set; } = string.Empty;
     
+    public string? CustomFormType { get; set; }
+    
     public string? CustomFormNo { get; set; }
     
     public string? CustomReceiptNo { get; set; }
@@ -62,6 +64,6 @@ public class AleBooking
     
     public string? ZBNumber { get; set; }
     
-    public int ContainerQuantity { get; set; }
+    public int TruckQuantity { get; set; }
     
 }

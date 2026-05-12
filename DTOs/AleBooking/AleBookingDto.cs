@@ -10,7 +10,7 @@ public class AleBookingDto
     public string HouseAWBNumber { get; set; } = string.Empty;
     public string MovementType { get; set; } = string.Empty;
     public string? TripType { get; set; }
-    public string SCN { get; set; } = string.Empty;
+    public string FlightNumber { get; set; } = string.Empty;
     public string TerminalLocation { get; set; } = string.Empty;
     public Models.Company? Terminal { get; set; }
     public string TerminalLocationName {get; set; } = string.Empty;
@@ -27,11 +27,12 @@ public class AleBookingDto
     public Models.Company? Airline { get; set; }
     public string AirlineName { get; set; } = string.Empty;
     public string BillingParty { get; set; } = string.Empty;
+    public string? CustomFormType { get; set; }
     public string? CustomFormNo { get; set; }
     public string? CustomReceiptNo { get; set; }
     public string? DICNumber { get; set; }
     public string? ZBNumber { get; set; }
-    public int ContainerQuantity { get; set; }
+    public int TruckQuantity { get; set; }
 }
 
 public class AleBookingCreateDto
@@ -51,7 +52,7 @@ public class AleBookingCreateDto
     public string? TripType { get; set; }
     
     [Required]
-    public string SCN { get; set; } = string.Empty;
+    public string FlightNumber { get; set; } = string.Empty;
 
     [Required]
     public string TerminalLocation { get; set; } = string.Empty;
@@ -72,11 +73,12 @@ public class AleBookingCreateDto
     [Required]
     public string BillingParty { get; set; } = string.Empty;
     
+    public string? CustomFormType { get; set; }
     public string? CustomFormNo { get; set; }
     public string? CustomReceiptNo { get; set; }
     public string? DICNumber { get; set; }
     public string? ZBNumber { get; set; }
-    public int ContainerQuantity { get; set; }
+    public int TruckQuantity { get; set; }
 }
 
 public class AleBookingUpdateDto : AleBookingCreateDto
