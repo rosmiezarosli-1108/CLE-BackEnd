@@ -69,13 +69,18 @@ public class AleContainerService : IAleContainerService
         ApprovedBothTime = aleContainer.ApprovedBothTime,
         TerminalGatedInTime = aleContainer.TerminalGatedInTime,
         TerminalGatedOutTime = aleContainer.TerminalGatedOutTime,
-        TerminalStatus = aleContainer.TerminalStatus,
-        CustomStatus = aleContainer.CustomStatus,
+       
         CustomAcceptedTime = aleContainer.CustomAcceptedTime,
         CustomRejectedTime = aleContainer.CustomRejectedTime,
         AKPSAcceptedTime = aleContainer.AKPSAcceptedTime,
         AKPSRejectedTime = aleContainer.AKPSRejectedTime,
-        AKPSStatus = aleContainer.AKPSStatus,
+      
+        RejectedBothTime = aleContainer.RejectedBothTime,
+        ExamineBothTime = aleContainer.ExamineBothTime,
+        CustomExamineTime = aleContainer.CustomExamineTime,
+        AKPSExamineTime = aleContainer.AKPSExamineTime,
+            
+        
     };
     
     public AleContainerService(ApplicationDbContext dbContext)
@@ -201,16 +206,17 @@ public class AleContainerService : IAleContainerService
         aleContainer.ApprovedAKPSTime = dto.ApprovedAKPSTime;
         aleContainer.ApprovedCustomsTime = dto.ApprovedCustomsTime;
         aleContainer.ApprovedBothTime = dto.ApprovedBothTime;
-        aleContainer.TerminalStatus = dto.TerminalStatus;
+        aleContainer.RejectedBothTime = dto.RejectedBothTime;
+        aleContainer.ExamineBothTime = dto.ExamineBothTime;
         aleContainer.TerminalGatedInTime = dto.TerminalGatedInTime;
         aleContainer.TerminalGatedOutTime = dto.TerminalGatedOutTime;
-        aleContainer.AKPSStatus = dto.AKPSStatus;
+        
         aleContainer.AKPSAcceptedTime = dto.AKPSAcceptedTime;
         aleContainer.AKPSRejectedTime = dto.AKPSRejectedTime;
-        aleContainer.CustomStatus = dto.CustomStatus;
+        aleContainer.AKPSExamineTime = dto.AKPSExamineTime;
         aleContainer.CustomAcceptedTime = dto.CustomAcceptedTime;
         aleContainer.CustomRejectedTime = dto.CustomRejectedTime;
-
+        aleContainer.CustomExamineTime = dto.CustomExamineTime;
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleContainer.ContainerId);
     }
