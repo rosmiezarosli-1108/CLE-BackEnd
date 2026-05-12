@@ -13,9 +13,12 @@ public class AleContainerDto
     public string ContainerSize { get; set; } = string.Empty;
     public string? VGM { get; set; }
     public string? TrailerType { get; set; } = string.Empty;
-    public string ConsigneeId { get; set; } = string.Empty;
+    public string? ConsigneeId { get; set; }
     public Models.Company? Consignee { get; set; }
-    public string ConsigneeName { get; set; } = string.Empty;
+    public string? ConsigneeName { get; set; }
+    public string? ExternalConsigneeName { get; set; }
+    public string? ExternalConsigneeAddress { get; set; }
+    public string? ExternalConsigneeContact { get; set; }
     public string HaulierId { get; set; } = string.Empty;
     public Models.Company? Haulier { get; set; }
     public string HaulierName { get; set; } = string.Empty;
@@ -79,9 +82,14 @@ public class AleContainerCreateDto
     public string? VGM { get; set; }
     
     public string? TrailerType { get; set; } = string.Empty;
+
+    public string ConsigneeId { get; set; }
     
-    [Required]
-    public string ConsigneeId { get; set; } = string.Empty;
+    public string? ExternalConsigneeName { get; set; }
+    
+    public string? ExternalConsigneeAddress { get; set; }
+    
+    public string? ExternalConsigneeContact { get; set; }
     
     public string? HaulierId { get; set; }
     
@@ -89,8 +97,7 @@ public class AleContainerCreateDto
     
     [Required]
     public string ROTNumber { get; set; } = string.Empty;
-
-    [Required]
+    
     public List<AleContainerAddressDto> ToAddress { get; set; } = new List<AleContainerAddressDto>();
     
     [Required(ErrorMessage = "ROT Date is required")]
@@ -114,7 +121,10 @@ public class AleContainerUpdateDto
     public string ContainerSize { get; set; } = string.Empty;
     public string? VGM { get; set; }
     public string? TrailerType { get; set; } = string.Empty;
-    public string ConsigneeId { get; set; } = string.Empty;
+    public string ConsigneeId { get; set; }
+    public string? ExternalConsigneeName { get; set; }
+    public string? ExternalConsigneeAddress { get; set; }
+    public string? ExternalConsigneeContact { get; set; }
     public string? HaulierId { get; set; }
     public string? TerminalId { get; set; }
     public string ROTNumber { get; set; } = string.Empty;

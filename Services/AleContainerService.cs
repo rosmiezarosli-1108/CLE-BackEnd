@@ -20,6 +20,9 @@ public class AleContainerService : IAleContainerService
         ConsigneeId = aleContainer.ConsigneeId,
         Consignee = aleContainer.ConsigneeCompany,
         ConsigneeName = aleContainer.ConsigneeCompany?.CompanyName ?? "Unknown",
+        ExternalConsigneeName = aleContainer.ExternalConsigneeName,
+        ExternalConsigneeAddress = aleContainer.ExternalConsigneeAddress,
+        ExternalConsigneeContact = aleContainer.ExternalConsigneeContact,
         HaulierId = aleContainer.HaulierId,
         Haulier = aleContainer.HaulierCompany,
         HaulierName = aleContainer.HaulierCompany?.CompanyName ?? "Unknown",
@@ -129,6 +132,9 @@ public class AleContainerService : IAleContainerService
             VGM = dto.VGM,
             TrailerType = dto.TrailerType,
             ConsigneeId = dto.ConsigneeId,
+            ExternalConsigneeName = dto.ExternalConsigneeName,
+            ExternalConsigneeAddress = dto.ExternalConsigneeAddress,
+            ExternalConsigneeContact =  dto.ExternalConsigneeContact,
             HaulierId = dto.HaulierId,
             TerminalId = dto.TerminalId,
             ROTDate = dto.ROTDate,
@@ -165,6 +171,9 @@ public class AleContainerService : IAleContainerService
         aleContainer.VGM = dto.VGM;
         aleContainer.TrailerType = dto.TrailerType;
         aleContainer.ConsigneeId = dto.ConsigneeId;
+        aleContainer.ExternalConsigneeName = dto.ExternalConsigneeName;
+        aleContainer.ExternalConsigneeAddress = dto.ExternalConsigneeAddress;
+        aleContainer.ExternalConsigneeContact = dto.ExternalConsigneeContact;
         aleContainer.HaulierId = dto.HaulierId;
         aleContainer.TerminalId = dto.TerminalId;
         aleContainer.ROTDate = dto.ROTDate;

@@ -20,11 +20,14 @@ public class AleContainer
     
     public string? TrailerType { get; set; } = string.Empty;
     
-    [Required]
-    public string ConsigneeId { get; set; } = string.Empty;
+    public string ConsigneeId { get; set; }
     
     [ForeignKey("ConsigneeId")]
     public virtual Company? ConsigneeCompany { get; set; }
+    
+    public string? ExternalConsigneeName { get; set; }
+    public string? ExternalConsigneeAddress { get; set; }
+    public string? ExternalConsigneeContact { get; set; }
     
     [Required]
     public string HaulierId { get; set; } = string.Empty; 
@@ -36,8 +39,7 @@ public class AleContainer
     
     [ForeignKey("TerminalId")]
     public virtual Company? TerminalCompany { get; set; }
-
-    [Required]
+    
     public List<AleContainerAddress> ToAddress { get; set; } = new List<AleContainerAddress>();
     
     [Required(ErrorMessage = "ROT Date is required")]
