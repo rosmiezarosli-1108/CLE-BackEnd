@@ -205,7 +205,7 @@ public class AleContainerService : IAleContainerService
         aleContainer.ApprovedBothTime = dto.ApprovedBothTime;
         aleContainer.ExamineBothTime = dto.ExamineBothTime;
         aleContainer.ExamineAKPSTime = dto.ExamineAKPSTime;
-        aleContainer.ExamineCustomTime = dto.ExamineAKPSTime;
+        aleContainer.ExamineCustomTime = dto.ExamineCustomTime;
         aleContainer.RejectedAKPSTime = dto.RejectedAKPSTime;
         aleContainer.RejectedCustomTime = dto.RejectedCustomTime;
         aleContainer.RejectedBothTime = dto.RejectedBothTime;

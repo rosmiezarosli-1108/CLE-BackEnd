@@ -145,6 +145,7 @@ public class AleContainerUpdateDto
     public DateTime? ApprovedAKPSTime { get; set; }
     public DateTime? ApprovedCustomsTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
+    public DateTime? ExamineBothTime { get; set; }
     public DateTime? ExamineAKPSTime { get; set; }
     public DateTime? ExamineCustomTime { get; set; }
     public DateTime? RejectedAKPSTime { get; set; }
