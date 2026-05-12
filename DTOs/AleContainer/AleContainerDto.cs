@@ -65,7 +65,7 @@ public class AleContainerDto
     public DateTime? RejectedCustomTime { get; set; }
     public DateTime? RejectedBothTime { get; set; }
     public string? EditRemarks { get; set; }
-    public string? PackageQuantity { get; set; }
+    public int? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }
 }
 
@@ -110,7 +110,7 @@ public class AleContainerCreateDto
     public DateTime AssignedTime { get; set; }
     
     public DateTime? EnrouteTime { get; set; }
-    public string? PackageQuantity { get; set; }
+    public int? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }
 }
 
@@ -162,7 +162,7 @@ public class AleContainerUpdateDto
     public DateTime? RejectedCustomTime { get; set; }
     public DateTime? RejectedBothTime { get; set; }
     public string? EditRemarks { get; set; }
-    public string? PackageQuantity { get; set; }
+    public int? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }
 }
 

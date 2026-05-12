@@ -126,7 +126,7 @@ public class AleContainer
     
     public string? EditRemarks { get; set; }
     
-    public string? PackageQuantity { get; set; }
+    public int? PackageQuantity { get; set; }
 
     public string? VolumeMetricWeight { get; set; }
 }
