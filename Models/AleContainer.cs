@@ -6,6 +6,7 @@ namespace CLE_BackEnd.Models;
 public class AleContainer
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ContainerId { get; set; }
     
     public string? ContainerNumber { get; set; }
