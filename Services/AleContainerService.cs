@@ -121,9 +121,15 @@ public class AleContainerService : IAleContainerService
 
     public async Task<AleContainerDto> CreateAsync(AleContainerCreateDto dto)
     {
-        var existing = await _dbContext.AleContainers.FirstOrDefaultAsync(c => c.ContainerNumber == dto.ContainerNumber && c.ROTNumber == dto.ROTNumber);
-        if (existing != null)
-            throw new Exception("Container ID already exists.");
+        if (!string.IsNullOrEmpty(dto.ContainerNumber))
+        {
+            var existing = await _dbContext.AleContainers.FirstOrDefaultAsync(c => 
+                c.ContainerNumber == dto.ContainerNumber && 
+                c.ROTNumber == dto.ROTNumber);
+            
+            if (existing != null)
+                throw new Exception("This Container Number has already been registered for this ROT.");
+        }
 
         var aleContainer = new Models.AleContainer
         {
