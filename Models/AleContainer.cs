@@ -130,4 +130,8 @@ public class AleContainer
     public int? PackageQuantity { get; set; }
 
     public string? VolumeMetricWeight { get; set; }
+    
+    public string? CustomRejectReason { get; set; }
+
+    public string? AKPSRejectReason { get; set; }
 }

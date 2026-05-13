@@ -32,6 +32,7 @@ public class AleContainerService : IAleContainerService
         ROTDate = aleContainer.ROTDate,
         ToAddress = aleContainer.ToAddress?.Select(a => new AleContainerAddressDto 
         { 
+            
             Address = a.Address 
         }).ToList() ?? new List<AleContainerAddressDto>(),
         ROTNumber = aleContainer.ROTNumber,
@@ -200,6 +201,7 @@ public class AleContainerService : IAleContainerService
         _dbContext.AleContainerAddresses.RemoveRange(aleContainer.ToAddress);
         foreach (var addrDto in dto.ToAddress)
         {
+           
             aleContainer.ToAddress.Add(new AleContainerAddress { Address = addrDto.Address });
         }
         aleContainer.ROTNumber = dto.ROTNumber;
@@ -241,6 +243,8 @@ public class AleContainerService : IAleContainerService
         aleContainer.EditRemarks = dto.EditRemarks;
         aleContainer.PackageQuantity = dto.PackageQuantity;
         aleContainer.VolumeMetricWeight = dto.VolumeMetricWeight;
+        aleContainer.CustomRejectReason = dto.CustomRejectReason;
+        aleContainer.AKPSRejectReason = dto.AKPSRejectReason;
         
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleContainer.ContainerId);
