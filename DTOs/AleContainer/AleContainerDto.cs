@@ -83,7 +83,7 @@ public class AleContainerCreateDto
     
     public string? TrailerType { get; set; } = string.Empty;
 
-    public string ConsigneeId { get; set; }
+    public string? ConsigneeId { get; set; }
     
     public string? ExternalConsigneeName { get; set; }
     
@@ -121,7 +121,7 @@ public class AleContainerUpdateDto
     public string ContainerSize { get; set; } = string.Empty;
     public string? VGM { get; set; }
     public string? TrailerType { get; set; } = string.Empty;
-    public string ConsigneeId { get; set; }
+    public string? ConsigneeId { get; set; }
     public string? ExternalConsigneeName { get; set; }
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }

@@ -19,6 +19,8 @@ public class AleAssignedHaulierDto
     public Models.AleBooking? AleBooking { get; set; }
     public string HaulierId { get; set; } = string.Empty;
     public string HaulierName { get; set; } = string.Empty;
+    public string PassNumber { get; set; }
+    public TimeOnly? ConsigneeTimeSlot { get; set; }
 }
 
 public class AleAssignedHaulierCreateDto
@@ -43,6 +45,10 @@ public class AleAssignedHaulierCreateDto
 
     [Required]
     public string HaulierId { get; set; } = string.Empty;
+    
+    public string PassNumber { get; set; }
+    
+    public TimeOnly? ConsigneeTimeSlot { get; set; }
 }
 
 public class AleAssignedHaulierUpdateDto : AleAssignedHaulierCreateDto

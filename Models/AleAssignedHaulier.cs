@@ -45,4 +45,8 @@ public class AleAssignedHaulier
     
     [Required]
     public string HaulierId { get; set; } = string.Empty;
+    
+    public string? PassNumber { get; set; }
+    
+    public TimeOnly? ConsigneeTimeSlot { get; set; }
 }

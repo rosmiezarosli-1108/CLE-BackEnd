@@ -20,7 +20,7 @@ public class AleContainer
     
     public string? TrailerType { get; set; } = string.Empty;
     
-    public string ConsigneeId { get; set; }
+    public string? ConsigneeId { get; set; }
     
     [ForeignKey("ConsigneeId")]
     public virtual Company? ConsigneeCompany { get; set; }

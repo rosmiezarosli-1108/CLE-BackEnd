@@ -25,6 +25,8 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
         ROTNumber = aleAssignedHaulier.ROTNumber,
         AleBooking = aleAssignedHaulier.AleBooking,
         HaulierId = aleAssignedHaulier.HaulierId,
+        PassNumber =  aleAssignedHaulier.PassNumber,
+        ConsigneeTimeSlot =  aleAssignedHaulier.ConsigneeTimeSlot,
     };
     
     public AleAssignedHaulierService(ApplicationDbContext dbContext)
@@ -68,6 +70,8 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
             ContainerId = dto.ContainerId,
             ROTNumber =  dto.ROTNumber,
             HaulierId =  dto.HaulierId,
+            PassNumber =  dto.PassNumber,
+            ConsigneeTimeSlot = dto.ConsigneeTimeSlot,
         };
         await _dbContext.AleAssignedHauliers.AddAsync(AleAssignedHaulier);
         await _dbContext.SaveChangesAsync();
@@ -89,6 +93,8 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
         AleAssignedHaulier.ContainerId = dto.ContainerId;
         AleAssignedHaulier.ROTNumber = dto.ROTNumber;
         AleAssignedHaulier.HaulierId = dto.HaulierId;
+        AleAssignedHaulier.PassNumber = dto.PassNumber;
+        AleAssignedHaulier.ConsigneeTimeSlot = dto.ConsigneeTimeSlot;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(AleAssignedHaulier.Id);
