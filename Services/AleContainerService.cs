@@ -170,6 +170,20 @@ public class AleContainerService : IAleContainerService
         {
             return null;
         }
+        
+        string auditAction = $"Container updated. Status: {dto.Status}";
+        if (dto.Status == "Rejected")
+        {
+            auditAction = $"Container Rejected. Reason: {dto.RejectedRemarks ?? "No remarks provided"}";
+        }
+        else if (dto.Status == "Deleted")
+        {
+            auditAction = $"Container Deleted. Reason: {dto.DeletedRemarks ?? "No remarks provided"}";
+        }
+        else if (dto.Status == "Enroute")
+        {
+            auditAction = $"Container Edited. Reason: {dto.EditRemarks ?? "No remarks provided"}";
+        }
 
         aleContainer.ContainerNumber = dto.ContainerNumber;
         aleContainer.ContainerSize = dto.ContainerSize;
@@ -213,7 +227,7 @@ public class AleContainerService : IAleContainerService
         {
             UpdatedBy = updatedBy,
             UpdatedTime = DateTime.UtcNow, 
-            Action = $"Container updated. Status: {dto.Status}"
+            Action = auditAction,
         });
         aleContainer.ApprovedAKPSTime = dto.ApprovedAKPSTime;
         aleContainer.ApprovedCustomsTime = dto.ApprovedCustomsTime;
