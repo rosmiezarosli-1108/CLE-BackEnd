@@ -68,7 +68,7 @@ public class AleContainerService : IAleContainerService
             Action = h.Action,
         }).OrderByDescending(h => h.UpdatedTime).ToList() ?? new List<AleContainerAuditsDto>(),
         ReceivedBy = aleContainer.ReceivedBy,
-        ApprovedCustomsTime = aleContainer.ApprovedCustomsTime,
+        ApprovedCustomTime = aleContainer.ApprovedCustomTime,
         ApprovedAKPSTime = aleContainer.ApprovedAKPSTime,
         ApprovedBothTime = aleContainer.ApprovedBothTime,
         ExamineBothTime = aleContainer.ExamineBothTime,
@@ -80,6 +80,8 @@ public class AleContainerService : IAleContainerService
         EditRemarks =  aleContainer.EditRemarks,
         PackageQuantity =  aleContainer.PackageQuantity,
         VolumeMetricWeight = aleContainer.VolumeMetricWeight,
+        AKPSRejectReason =  aleContainer.AKPSRejectReason,
+        CustomRejectReason =  aleContainer.CustomRejectReason,
     };
     
     public AleContainerService(ApplicationDbContext dbContext)
@@ -232,7 +234,7 @@ public class AleContainerService : IAleContainerService
             Action = auditAction,
         });
         aleContainer.ApprovedAKPSTime = dto.ApprovedAKPSTime;
-        aleContainer.ApprovedCustomsTime = dto.ApprovedCustomsTime;
+        aleContainer.ApprovedCustomTime = dto.ApprovedCustomTime;
         aleContainer.ApprovedBothTime = dto.ApprovedBothTime;
         aleContainer.ExamineBothTime = dto.ExamineBothTime;
         aleContainer.ExamineAKPSTime = dto.ExamineAKPSTime;

@@ -109,7 +109,7 @@ public class AleContainer
     
     public DateTime? ApprovedAKPSTime { get; set; }
     
-    public DateTime? ApprovedCustomsTime { get; set; }
+    public DateTime? ApprovedCustomTime { get; set; }
     
     public DateTime? ApprovedBothTime { get; set; }
     

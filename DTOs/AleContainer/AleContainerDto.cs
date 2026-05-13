@@ -56,7 +56,7 @@ public class AleContainerDto
     public List <AleContainerAuditsDto> UpdateHistory { get; set; } = new List<AleContainerAuditsDto>();
     public string? ReceivedBy { get; set; }
     public DateTime? ApprovedAKPSTime { get; set; }
-    public DateTime? ApprovedCustomsTime { get; set; }
+    public DateTime? ApprovedCustomTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
     public DateTime? ExamineBothTime { get; set; }
     public DateTime? ExamineAKPSTime { get; set; }
@@ -67,6 +67,8 @@ public class AleContainerDto
     public string? EditRemarks { get; set; }
     public int? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }
+    public string? CustomRejectReason { get; set; }
+    public string? AKPSRejectReason { get; set; }
 }
 
 public class AleContainerCreateDto
@@ -153,7 +155,7 @@ public class AleContainerUpdateDto
     public string? ReceivedBy { get; set; }
     public string? UpdatedBy { get; set; } = string.Empty;
     public DateTime? ApprovedAKPSTime { get; set; }
-    public DateTime? ApprovedCustomsTime { get; set; }
+    public DateTime? ApprovedCustomTime { get; set; }
     public DateTime? ApprovedBothTime { get; set; }
     public DateTime? ExamineBothTime { get; set; }
     public DateTime? ExamineAKPSTime { get; set; }
@@ -165,7 +167,6 @@ public class AleContainerUpdateDto
     public int? PackageQuantity { get; set; }
     public string? VolumeMetricWeight { get; set; }
     public string? CustomRejectReason { get; set; }
-
     public string? AKPSRejectReason { get; set; }
 
 }
