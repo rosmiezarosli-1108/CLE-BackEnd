@@ -15,6 +15,7 @@ public class NotificationService : INotificationService {
             Message = message,
             ROTNumber = rotNumber,
             ContainerId = containerId,
+            CreatedAt = DateTime.UtcNow
         };
         _dbContext.Notifications.Add(notification);
         await _dbContext.SaveChangesAsync();
@@ -28,7 +29,7 @@ public class NotificationService : INotificationService {
                 Id = n.Id,
                 Message = n.Message,
                 ROTNumber = n.ROTNumber,
-                ContianerId = n.ContainerId,
+                ContainerId = n.ContainerId,
                 IsRead = n.IsRead,
                 CreatedAt = n.CreatedAt
             }).ToListAsync();

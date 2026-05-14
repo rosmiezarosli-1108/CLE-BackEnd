@@ -19,5 +19,5 @@ public class Notification
     
     public bool IsRead { get; set; } = false;
     
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

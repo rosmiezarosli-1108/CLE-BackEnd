@@ -6,7 +6,7 @@ public class NotificationDto
     public string ReceiverId { get; set; } = string.Empty;
     public string Message { get; set; } = string.Empty;
     public string? ROTNumber { get; set; }
-    public int? ContianerId { get; set; }
+    public int? ContainerId { get; set; }
     public bool IsRead { get; set; }
     public DateTime CreatedAt { get; set; }
 }
