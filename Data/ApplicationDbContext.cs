@@ -27,7 +27,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<AleBookingDocument> AleBookingDocuments { get; set; }
     public DbSet<AleAssignedHaulier> AleAssignedHauliers { get; set; }
     public DbSet<AleTimeSlot> AleTimeSlots { get; set; }
-    
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -8,6 +8,7 @@ namespace CLE_BackEnd.Services;
 public class AleContainerService : IAleContainerService
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly INotificationService _notificationService;
     
     public static AleContainerDto MapToDto(AleContainer aleContainer) => new()
     {
@@ -84,9 +85,10 @@ public class AleContainerService : IAleContainerService
         CustomRejectReason =  aleContainer.CustomRejectReason,
     };
     
-    public AleContainerService(ApplicationDbContext dbContext)
+    public AleContainerService(ApplicationDbContext dbContext, INotificationService notificationService)
     {
         _dbContext = dbContext;
+        _notificationService = notificationService;
     }
 
     public async Task<IEnumerable<AleContainerDto>> GetAllAsync()
@@ -172,6 +174,16 @@ public class AleContainerService : IAleContainerService
         if (aleContainer == null)
         {
             return null;
+        }
+        
+        if (aleContainer.Status == "Enroute" && dto.Status == "Rejected")
+        {
+            await _notificationService.CreateNotification(
+                aleContainer.HaulierId, 
+                $"Booking {aleContainer.ROTNumber} has been Rejected by the Forwarder.",
+                aleContainer.ROTNumber,
+                aleContainer.ContainerId
+            );
         }
         
         string auditAction = $"Container updated. Status: {dto.Status}";

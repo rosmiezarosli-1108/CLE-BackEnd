@@ -81,6 +81,7 @@ builder.Services.AddScoped<IAleBookingService, AleBookingService>();
 builder.Services.AddScoped<IAleBookingDocumentService, AleBookingDocumentService>();
 builder.Services.AddScoped < IAleAssignedHaulierService, AleAssignedHaulierService>();
 builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 
