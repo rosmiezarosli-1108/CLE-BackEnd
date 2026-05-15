@@ -58,8 +58,8 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
 
     public async Task<AleAssignedHaulierDto> CreateAsync(AleAssignedHaulierCreateDto dto)
     {
-        var aleAssignedHaulierExists = await _dbContext.Containers.AnyAsync(a => a.ContainerId == dto.ContainerId && a.ROTNumber == dto.ROTNumber);
-        if (!aleAssignedHaulierExists) throw new Exception("Cannot assign new haulier to already assigned haulier.");
+        var aleAssignedHaulierExists = await _dbContext.AleAssignedHauliers.AnyAsync(a => a.ContainerId == dto.ContainerId && a.ROTNumber == dto.ROTNumber);
+        if (aleAssignedHaulierExists) throw new Exception("Cannot assign new haulier to already assigned haulier.");
         
         var AleAssignedHaulier = new Models.AleAssignedHaulier
         {
