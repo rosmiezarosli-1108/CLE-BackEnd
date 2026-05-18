@@ -22,7 +22,10 @@ public class AuthService : IAuthService
         if (user == null)
             return new AuthResult { ErrorMessage = "Invalid User ID or Password." };
 
-        if (user.Company.Region != region)
+        bool isRegionRegistered = user.Company.Region.Any(r => 
+            r.SystemName == access && r.RegionCode == region);
+        
+        if (!isRegionRegistered)
             return new AuthResult { ErrorMessage = $"Your account is not registered for the {region} region." };
 
         if (!user.Access.Contains(access))

@@ -9,7 +9,7 @@ public class CompanyDto
     public string SSMNo { get; set; } = string.Empty;
     public string SSTNo { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
-    public string Region { get; set; } = string.Empty;
+    public List<SystemRegionDto> Region { get; set; } = new List<SystemRegionDto>();
     public string ManagerName { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public string TelephoneNumber { get; set; } = string.Empty;
@@ -60,7 +60,7 @@ public class CompanyCreateDto
     public string CLEKmailNotification { get; set; } = string.Empty;
     
     [Required]
-    public string Region { get; set; } = string.Empty;
+    public List<SystemRegionDto> Region { get; set; } = new List<SystemRegionDto>();
 
     [Required]
     public string Role { get; set; } = string.Empty;
@@ -73,4 +73,10 @@ public class CompanyUpdateDto : CompanyCreateDto
 {
     [Required]
     public string CompanyCode { get; set; } = string.Empty;
+}
+
+public class SystemRegionDto
+{
+    public string SystemName { get; set; } = string.Empty;
+    public string RegionCode { get; set; } = string.Empty;
 }

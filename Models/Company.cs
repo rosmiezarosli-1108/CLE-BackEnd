@@ -22,7 +22,7 @@ public class Company
     public string Role { get; set; } = string.Empty;
     
     [Required]
-    public string Region { get; set; } = string.Empty;
+    public List<SystemRegion> Region { get; set; } = new List<SystemRegion>();
     
     [Required]
     public string ManagerName { get; set; } = string.Empty;
@@ -52,4 +52,10 @@ public class Company
     [Required] 
     public string LogoPath { get; set; } = string.Empty;
 
+}
+
+public class SystemRegion
+{
+    public string SystemName { get; set; } = string.Empty;
+    public string RegionCode { get; set; } = string.Empty;
 }

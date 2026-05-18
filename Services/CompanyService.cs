@@ -24,7 +24,11 @@ public class CompanyService : ICompanyService
         EmailAddress = company.EmailAddress,
         CCEmailAddress = company.CCEmailAddress,
         CLEKmailNotification = company.CLEKmailNotification,
-        Region = company.Region,
+        Region = company.Region.Select(r => new SystemRegionDto
+        {
+            SystemName = r.SystemName,
+            RegionCode = r.RegionCode
+        }).ToList(),
         Role = company.Role,
         LogoPath = company.LogoPath,
     };
@@ -87,7 +91,11 @@ public class CompanyService : ICompanyService
             EmailAddress = dto.EmailAddress,
             CCEmailAddress = dto.CCEmailAddress,
             CLEKmailNotification = dto.CLEKmailNotification,
-            Region = dto.Region,
+            Region = dto.Region.Select(r => new SystemRegion
+            {
+                SystemName = r.SystemName,
+                RegionCode = r.RegionCode
+            }).ToList(),
             Role = dto.Role,
             LogoPath = dto.LogoPath
         };
@@ -116,7 +124,11 @@ public class CompanyService : ICompanyService
         company.EmailAddress = dto.EmailAddress;
         company.CCEmailAddress = dto.CCEmailAddress;
         company.CLEKmailNotification = dto.CLEKmailNotification;
-        company.Region = dto.Region;
+        company.Region = dto.Region.Select(r => new SystemRegion
+        {
+            SystemName = r.SystemName,
+            RegionCode = r.RegionCode
+        }).ToList();
         company.Role = dto.Role;
         company.LogoPath = dto.LogoPath;
 
