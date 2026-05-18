@@ -3,6 +3,7 @@ using CLE_BackEnd.DTOs.Company;
 using CLE_BackEnd.DTOs.User;
 using CLE_BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CLE_BackEnd.Services;
 
@@ -49,30 +50,41 @@ public class UserService : IUserService
 
     public async Task<UserDto> CreateAsync(UserCreateDto dto)
     {
+        var company = await _dbContext.Companies
+            .FirstOrDefaultAsync(c => c.CompanyCode == dto.CompanyCode);
+        
+        string newCode;
+        var companyInitial = !string.IsNullOrWhiteSpace(company?.CompanyName)
+            ? company.CompanyName.Trim().First().ToString().ToUpper() 
+            : "C";
+        
+        var cleanName = (dto.FullName ?? "").Replace(" ", "").Trim();
+        var userInitial = cleanName.Length >= 2 
+            ? cleanName.Substring(0, 2).ToUpper() 
+            : cleanName.Length == 1 ? cleanName.ToUpper() + "US" : "US";
+        
+        string idPrefix = companyInitial + userInitial;
         var lastUser = await _dbContext.Users
+            .Where(u => u.UserId.StartsWith(idPrefix))
             .OrderByDescending(u => u.UserId)
             .FirstOrDefaultAsync();
         
-        string newCode;
         if (lastUser == null)
         {
-            newCode = "CLE0000001";
+            newCode = idPrefix + "00001";
         }
         else
         {
-            if (int.TryParse(lastUser.UserId.Substring(3), out int lastNumber))
+            if (int.TryParse(lastUser.UserId.Substring(idPrefix.Length), out int lastNumber))
             {
                 int nextNumber = lastNumber + 1;
-                newCode = $"CLE{nextNumber.ToString("D7")}";
+                newCode = $"{idPrefix}{nextNumber.ToString("D5")}";
             }
             else
             {
-                newCode = "CLE0000001";
+                newCode = idPrefix + "00001";
             }
         }
-        
-        var company = await _dbContext.Companies
-            .FirstOrDefaultAsync(c => c.CompanyCode == dto.CompanyCode);
         
         var user = new Models.User
         {
@@ -85,7 +97,7 @@ public class UserService : IUserService
             AccessLevel = dto.AccessLevel,
             EmailAddress = dto.EmailAddress,
             ContactNumber = dto.ContactNumber,
-            Status = dto.Status,
+            Status = "Active",
         };
         await _dbContext.Users.AddAsync(user);
         await _dbContext.SaveChangesAsync();

@@ -52,7 +52,7 @@ public class UserCreateDto
 public class UserUpdateDto
 {
     [Required]
-    public string UserId { get; set; } = string.Empty; // Primary Key to find the record
+    public string UserId { get; set; } = string.Empty;
 
     [Required]
     public string FullName { get; set; } = string.Empty;
