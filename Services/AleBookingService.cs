@@ -40,6 +40,16 @@ public class AleBookingService : IAleBookingService
         DICNumber =  aleBooking.DICNumber,
         ZBNumber =  aleBooking.ZBNumber,
         TruckQuantity = aleBooking.TruckQuantity,
+        CarrierReferenceNumber = aleBooking.CarrierReferenceNumber,
+        TotalPackageQuantity = aleBooking.TotalPackageQuantity,
+        Weight =  aleBooking.Weight,
+        ConsigneeId = aleBooking.ConsigneeId,
+        ConsigneeCompany = aleBooking.ConsigneeCompany,
+        SSMNumber = aleBooking.SSMNumber,
+        ExternalConsigneeName =  aleBooking.ExternalConsigneeName,
+        ExternalConsigneeAddress = aleBooking.ExternalConsigneeAddress,
+        ExternalConsigneeContact =  aleBooking.ExternalConsigneeContact,
+        Size = aleBooking.Size,
     };
     
     public AleBookingService(ApplicationDbContext dbContext)
@@ -94,6 +104,15 @@ public class AleBookingService : IAleBookingService
             DICNumber = dto.DICNumber,
             ZBNumber = dto.ZBNumber,
             TruckQuantity = dto.TruckQuantity,
+            CarrierReferenceNumber =  dto.CarrierReferenceNumber,
+            TotalPackageQuantity =  dto.TotalPackageQuantity,
+            Weight =  dto.Weight,
+            ConsigneeId = dto.ConsigneeId,
+            SSMNumber = dto.SSMNumber,
+            ExternalConsigneeName = dto.ExternalConsigneeName,
+            ExternalConsigneeAddress = dto.ExternalConsigneeAddress,
+            ExternalConsigneeContact = dto.ExternalConsigneeContact,
+            Size = dto.Size,
         };
         await _dbContext.AleBookings.AddAsync(aleBooking);
         await _dbContext.SaveChangesAsync();
@@ -128,6 +147,15 @@ public class AleBookingService : IAleBookingService
         aleBooking.DICNumber = dto.DICNumber;
         aleBooking.ZBNumber = dto.ZBNumber;
         aleBooking.TruckQuantity = dto.TruckQuantity;
+        aleBooking.CarrierReferenceNumber = dto.CarrierReferenceNumber;
+        aleBooking.TotalPackageQuantity = dto.TotalPackageQuantity;
+        aleBooking.Weight = dto.Weight;
+        aleBooking.ConsigneeId = dto.ConsigneeId;
+        aleBooking.SSMNumber = dto.SSMNumber;
+        aleBooking.ExternalConsigneeName = dto.ExternalConsigneeName;
+        aleBooking.ExternalConsigneeAddress = dto.ExternalConsigneeAddress;
+        aleBooking.ExternalConsigneeContact = dto.ExternalConsigneeContact;
+        aleBooking.Size = dto.Size;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleBooking.ROTNumber);

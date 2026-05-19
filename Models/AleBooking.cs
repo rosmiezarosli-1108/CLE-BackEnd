@@ -66,4 +66,25 @@ public class AleBooking
     
     public int TruckQuantity { get; set; }
     
+    public string CarrierReferenceNumber { get; set; } = string.Empty;
+    
+    public int? TotalPackageQuantity { get; set; }
+    
+    public string? Weight { get; set; }
+    
+    public string? ConsigneeId { get; set; }
+    
+    [ForeignKey("ConsigneeId")]
+    public virtual Company? ConsigneeCompany { get; set; }
+    
+    public string? SSMNumber { get; set; }
+    
+    public string? ExternalConsigneeName { get; set; }
+    
+    public string? ExternalConsigneeAddress { get; set; }
+    
+    public string? ExternalConsigneeContact { get; set; }
+    
+    public double? Size { get; set; }
+    
 }

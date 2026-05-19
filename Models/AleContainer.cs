@@ -9,8 +9,6 @@ public class AleContainer
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ContainerId { get; set; }
     
-    public string? ContainerNumber { get; set; }
-    
     [Required]
     public string ContainerType { get; set; } = string.Empty;
     

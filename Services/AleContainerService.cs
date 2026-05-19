@@ -13,7 +13,6 @@ public class AleContainerService : IAleContainerService
     public static AleContainerDto MapToDto(AleContainer aleContainer) => new()
     {
         ContainerId = aleContainer.ContainerId,
-        ContainerNumber = aleContainer.ContainerNumber,
         ContainerSize = aleContainer.ContainerSize,
         ContainerType = aleContainer.ContainerType,
         VGM = aleContainer.VGM,
@@ -125,19 +124,8 @@ public class AleContainerService : IAleContainerService
 
     public async Task<AleContainerDto> CreateAsync(AleContainerCreateDto dto)
     {
-        if (!string.IsNullOrEmpty(dto.ContainerNumber))
-        {
-            var existing = await _dbContext.AleContainers.FirstOrDefaultAsync(c => 
-                c.ContainerNumber == dto.ContainerNumber && 
-                c.ROTNumber == dto.ROTNumber);
-            
-            if (existing != null)
-                throw new Exception("This Container Number has already been registered for this ROT.");
-        }
-
         var aleContainer = new Models.AleContainer
         {
-            ContainerNumber = dto.ContainerNumber,
             ContainerSize = dto.ContainerSize,
             ContainerType = dto.ContainerType,
             VGM = dto.VGM,
@@ -200,7 +188,6 @@ public class AleContainerService : IAleContainerService
             auditAction = $"Container Edited. Reason: {dto.EditRemarks ?? "No remarks provided"}";
         }
 
-        aleContainer.ContainerNumber = dto.ContainerNumber;
         aleContainer.ContainerSize = dto.ContainerSize;
         aleContainer.ContainerType = dto.ContainerType;
         aleContainer.VGM = dto.VGM;

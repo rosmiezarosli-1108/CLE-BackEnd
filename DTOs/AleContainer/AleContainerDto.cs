@@ -8,7 +8,6 @@ namespace CLE_BackEnd.DTOs.AleContainer;
 public class AleContainerDto
 {
     public int ContainerId { get; set; }
-    public string? ContainerNumber { get; set; }
     public string ContainerType { get; set; } = string.Empty;
     public string ContainerSize { get; set; } = string.Empty;
     public string? VGM { get; set; }
@@ -73,8 +72,6 @@ public class AleContainerDto
 
 public class AleContainerCreateDto
 {
-    public string? ContainerNumber { get; set; }
-    
     [Required]
     public string ContainerType { get; set; } = string.Empty;
     
@@ -118,7 +115,6 @@ public class AleContainerCreateDto
 
 public class AleContainerUpdateDto
 {
-    public string? ContainerNumber { get; set; }
     public string ContainerType { get; set; } = string.Empty;
     public string ContainerSize { get; set; } = string.Empty;
     public string? VGM { get; set; }
