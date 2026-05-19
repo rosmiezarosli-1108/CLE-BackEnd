@@ -35,14 +35,14 @@ public class AleBookingDto
     public int TruckQuantity { get; set; }
     public string CarrierReferenceNumber { get; set; } = string.Empty;
     public int? TotalPackageQuantity { get; set; }
-    public string? Weight { get; set; }
+    public double? Weight { get; set; }
     public string? ConsigneeId { get; set; }
     public Models.Company? ConsigneeCompany { get; set; }
     public string? SSMNumber { get; set; }
     public string? ExternalConsigneeName { get; set; }
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }
-    public double? Size { get; set; }
+    public string? Size { get; set; }
 }
 
 public class AleBookingCreateDto
@@ -56,7 +56,6 @@ public class AleBookingCreateDto
     [Required]
     public string HouseAWBNumber { get; set; } = string.Empty;
 
-    [Required]
     public string MovementType { get; set; } = string.Empty;
 
     public string? TripType { get; set; }
@@ -64,23 +63,18 @@ public class AleBookingCreateDto
     [Required]
     public string FlightNumber { get; set; } = string.Empty;
 
-    [Required]
     public string TerminalLocation { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "ETA is required")]
+    
     public DateOnly ETA { get; set; }
     public string? SealNumber { get; set; }
     public string? ForwardingRemarks { get; set; }
     public string? HaulierRemarks { get; set; }
     public string? TerminalRemarks { get; set; }
 
-    [Required]
     public string ForwardingId { get; set; } = string.Empty;
 
-    [Required]
     public string AirlineId { get; set; } = string.Empty;
 
-    [Required]
     public string BillingParty { get; set; } = string.Empty;
     
     public string? CustomFormType { get; set; }
@@ -91,13 +85,13 @@ public class AleBookingCreateDto
     public int TruckQuantity { get; set; }
     public string CarrierReferenceNumber { get; set; } = string.Empty;
     public int? TotalPackageQuantity { get; set; }
-    public string? Weight { get; set; }
+    public double? Weight { get; set; }
     public string? ConsigneeId { get; set; }
     public string? SSMNumber { get; set; }
     public string? ExternalConsigneeName { get; set; }
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }
-    public double? Size { get; set; }
+    public string? Size { get; set; }
 }
 
 public class AleBookingUpdateDto : AleBookingCreateDto

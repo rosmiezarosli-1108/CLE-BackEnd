@@ -14,7 +14,6 @@ public class AleBooking
     [Required]
     public string HouseAWBNumber { get; set; } = string.Empty;
     
-    [Required]
     public string MovementType { get; set; } = string.Empty;
     
     [Required]
@@ -22,13 +21,11 @@ public class AleBooking
     
     public string? TripType { get; set; }
     
-    [Required]
     public string TerminalLocation { get; set; } = string.Empty;
     
     [ForeignKey("TerminalLocation")]
     public virtual Company? TerminalCompany { get; set; }
     
-    [Required(ErrorMessage = "ETA is required")]
     public DateOnly? ETA { get; set; }
     
     public string? SealNumber { get; set; }
@@ -39,19 +36,16 @@ public class AleBooking
     
     public string? TerminalRemarks { get; set; }
     
-    [Required]
     public string ForwardingId { get; set; } = string.Empty;
     
     [ForeignKey("ForwardingId")]
     public virtual Company? ForwardingCompany { get; set; }
    
-    [Required]
     public string AirlineId { get; set; } = string.Empty;
     
     [ForeignKey("AirlineId")]
     public virtual Company? AirlineCompany { get; set; }
     
-    [Required]
     public string BillingParty { get; set; } = string.Empty;
     
     public string? CustomFormType { get; set; }
@@ -70,7 +64,7 @@ public class AleBooking
     
     public int? TotalPackageQuantity { get; set; }
     
-    public string? Weight { get; set; }
+    public double? Weight { get; set; }
     
     public string? ConsigneeId { get; set; }
     
@@ -85,6 +79,5 @@ public class AleBooking
     
     public string? ExternalConsigneeContact { get; set; }
     
-    public double? Size { get; set; }
-    
+    public string? Size { get; set; }
 }
