@@ -80,4 +80,9 @@ public class AleBooking
     public string? ExternalConsigneeContact { get; set; }
     
     public string? Size { get; set; }
+    
+    public string? BookingAgentId { get; set; }
+    
+    [ForeignKey("BookingAgentId")]
+    public virtual Company? BookingAgentCompany { get; set; }
 }

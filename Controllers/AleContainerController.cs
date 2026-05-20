@@ -93,4 +93,18 @@ public class AleContainerController : ControllerBase
         var aleContainers = await _aleContainerService.GetAllAleContainersByHaulier(id);
         return Ok(aleContainers);
     }
+    
+    [HttpGet("all/bookingAgent/{id}")]
+    public async Task<IActionResult> GetAllAleContainersByBookingAgent(string id)
+    {
+        var aleContainers = await _aleContainerService.GetAllAleContainersByBookingAgent(id);
+        return Ok(aleContainers);
+    }
+    
+    [HttpGet("all/consignee/{id}")]
+    public async Task<IActionResult> GetAllAleContainersByConsignee(string id)
+    {
+        var aleContainers = await _aleContainerService.GetAllAleContainersByConsignee(id);
+        return Ok(aleContainers);
+    }
 }

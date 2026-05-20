@@ -12,4 +12,6 @@ public interface IAleBookingService
     Task<bool> DeleteAsync(string id);
     Task<IEnumerable<AleBookingDto>> GetAllAleBookingsByForwarding(string forwarderId);
     Task<IEnumerable<AleBookingDto>> GetAllAleBookingsByHaulier(string haulierId);
+    Task<IEnumerable<AleBookingDto>> GetAllAleBookingsByBookingAgent(string bookingAgentId);
+    Task<IEnumerable<AleBookingDto>> GetAllAleBookingsByConsignee(string consigneeId);
 }

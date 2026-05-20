@@ -94,4 +94,18 @@ public class AleBookingController : ControllerBase
         var aleBookings = await _aleBookingService.GetAllAleBookingsByHaulier(id);
         return Ok(aleBookings);
     }
+    
+    [HttpGet("all/bookingAgent/{id}")]
+    public async Task<IActionResult> GetAllAleBookingsByBookingAgent(string id)
+    {
+        var aleBookings = await _aleBookingService.GetAllAleBookingsByBookingAgent(id);
+        return Ok(aleBookings);
+    }
+    
+    [HttpGet("all/consignee/{id}")]
+    public async Task<IActionResult> GetAllAleBookingsByConsignee(string id)
+    {
+        var aleBookings = await _aleBookingService.GetAllAleBookingsByConsignee(id);
+        return Ok(aleBookings);
+    }
 }

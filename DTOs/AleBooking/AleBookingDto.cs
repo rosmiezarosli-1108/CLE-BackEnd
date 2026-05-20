@@ -43,6 +43,8 @@ public class AleBookingDto
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }
     public string? Size { get; set; }
+    public string? BookingAgentId { get; set; } = string.Empty;
+    public Models.Company? BookingAgentCompany { get; set; }
 }
 
 public class AleBookingCreateDto
@@ -92,6 +94,7 @@ public class AleBookingCreateDto
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }
     public string? Size { get; set; }
+    public string? BookingAgentId { get; set; } =  string.Empty;
 }
 
 public class AleBookingUpdateDto : AleBookingCreateDto

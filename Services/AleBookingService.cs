@@ -50,6 +50,8 @@ public class AleBookingService : IAleBookingService
         ExternalConsigneeAddress = aleBooking.ExternalConsigneeAddress,
         ExternalConsigneeContact =  aleBooking.ExternalConsigneeContact,
         Size = aleBooking.Size,
+        BookingAgentId = aleBooking.BookingAgentId,
+        BookingAgentCompany =  aleBooking.BookingAgentCompany,
     };
     
     public AleBookingService(ApplicationDbContext dbContext)
@@ -61,7 +63,9 @@ public class AleBookingService : IAleBookingService
     {
         var aleBookings = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)       
-            .Include(b => b.AirlineCompany)   
+            .Include(b => b.AirlineCompany)
+            .Include(b => b.ConsigneeCompany)
+            .Include(b => b.BookingAgentCompany)
             .ToListAsync();
         return aleBookings.Select(MapToDto);
     }
@@ -71,7 +75,8 @@ public class AleBookingService : IAleBookingService
         var aleBooking = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)
             .Include(b => b.AirlineCompany)
-            
+            .Include(b => b.ConsigneeCompany)
+            .Include(b => b.BookingAgentCompany)
             .FirstOrDefaultAsync(b => b.ROTNumber == id);
         return aleBooking == null? null : MapToDto(aleBooking);
     }
@@ -113,6 +118,7 @@ public class AleBookingService : IAleBookingService
             ExternalConsigneeAddress = dto.ExternalConsigneeAddress,
             ExternalConsigneeContact = dto.ExternalConsigneeContact,
             Size = dto.Size,
+            BookingAgentId = dto.BookingAgentId,
         };
         await _dbContext.AleBookings.AddAsync(aleBooking);
         await _dbContext.SaveChangesAsync();
@@ -156,6 +162,7 @@ public class AleBookingService : IAleBookingService
         aleBooking.ExternalConsigneeAddress = dto.ExternalConsigneeAddress;
         aleBooking.ExternalConsigneeContact = dto.ExternalConsigneeContact;
         aleBooking.Size = dto.Size;
+        aleBooking.BookingAgentId = dto.BookingAgentId;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(aleBooking.ROTNumber);
@@ -204,6 +211,8 @@ public class AleBookingService : IAleBookingService
         var aleBookings = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)       
             .Include(b => b.AirlineCompany)
+            .Include(b => b.ConsigneeCompany)
+            .Include(b => b.BookingAgentCompany)
             .Where(b => b.ForwardingId == forwarderId)
             .ToListAsync();
         return aleBookings.Select(MapToDto);
@@ -214,7 +223,33 @@ public class AleBookingService : IAleBookingService
         var aleBookings = await _dbContext.AleBookings
             .Include(b => b.ForwardingCompany)       
             .Include(b => b.AirlineCompany)
+            .Include(b => b.ConsigneeCompany)
+            .Include(b => b.BookingAgentCompany)
             .Where(b => b.ForwardingId == haulierId)
+            .ToListAsync();
+        return aleBookings.Select(MapToDto);
+    }
+    
+    public async Task<IEnumerable<AleBookingDto>> GetAllAleBookingsByBookingAgent(string bookingAgentId)
+    {
+        var aleBookings = await _dbContext.AleBookings
+            .Include(b => b.ForwardingCompany)       
+            .Include(b => b.AirlineCompany)
+            .Include(b => b.ConsigneeCompany)
+            .Include(b => b.BookingAgentCompany)
+            .Where(b => b.BookingAgentId == bookingAgentId)
+            .ToListAsync();
+        return aleBookings.Select(MapToDto);
+    }
+    
+    public async Task<IEnumerable<AleBookingDto>> GetAllAleBookingsByConsignee(string consigneeId)
+    {
+        var aleBookings = await _dbContext.AleBookings
+            .Include(b => b.ForwardingCompany)       
+            .Include(b => b.AirlineCompany)
+            .Include(b => b.ConsigneeCompany)
+            .Include(b => b.BookingAgentCompany)
+            .Where(b => b.ConsigneeId == consigneeId)
             .ToListAsync();
         return aleBookings.Select(MapToDto);
     }
