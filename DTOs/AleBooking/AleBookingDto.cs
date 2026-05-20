@@ -35,7 +35,9 @@ public class AleBookingDto
     public int TruckQuantity { get; set; }
     public string CarrierReferenceNumber { get; set; } = string.Empty;
     public int? TotalPackageQuantity { get; set; }
+    public int? UpdatedTotalPackageQuantity { get; set; }
     public double? Weight { get; set; }
+    public double? UpdatedWeight { get; set; }
     public string? ConsigneeId { get; set; }
     public Models.Company? ConsigneeCompany { get; set; }
     public string? SSMNumber { get; set; }
@@ -99,5 +101,6 @@ public class AleBookingCreateDto
 
 public class AleBookingUpdateDto : AleBookingCreateDto
 {
-
+    public int? UpdatedTotalPackageQuantity { get; set; }
+    public double? UpdatedWeight { get; set; }
 }

@@ -42,7 +42,9 @@ public class AleBookingService : IAleBookingService
         TruckQuantity = aleBooking.TruckQuantity,
         CarrierReferenceNumber = aleBooking.CarrierReferenceNumber,
         TotalPackageQuantity = aleBooking.TotalPackageQuantity,
+        UpdatedTotalPackageQuantity =  aleBooking.UpdatedTotalPackageQuantity,
         Weight =  aleBooking.Weight,
+        UpdatedWeight =  aleBooking.UpdatedWeight,
         ConsigneeId = aleBooking.ConsigneeId,
         ConsigneeCompany = aleBooking.ConsigneeCompany,
         SSMNumber = aleBooking.SSMNumber,
@@ -155,7 +157,9 @@ public class AleBookingService : IAleBookingService
         aleBooking.TruckQuantity = dto.TruckQuantity;
         aleBooking.CarrierReferenceNumber = dto.CarrierReferenceNumber;
         aleBooking.TotalPackageQuantity = dto.TotalPackageQuantity;
+        aleBooking.UpdatedTotalPackageQuantity = dto.UpdatedTotalPackageQuantity;
         aleBooking.Weight = dto.Weight;
+        aleBooking.UpdatedWeight = dto.UpdatedWeight;
         aleBooking.ConsigneeId = dto.ConsigneeId;
         aleBooking.SSMNumber = dto.SSMNumber;
         aleBooking.ExternalConsigneeName = dto.ExternalConsigneeName;

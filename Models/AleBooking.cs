@@ -64,7 +64,11 @@ public class AleBooking
     
     public int? TotalPackageQuantity { get; set; }
     
+    public int? UpdatedTotalPackageQuantity { get; set; }
+    
     public double? Weight { get; set; }
+    
+    public double? UpdatedWeight { get; set; }
     
     public string? ConsigneeId { get; set; }
     
