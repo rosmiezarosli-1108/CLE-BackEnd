@@ -115,14 +115,32 @@ app.Use(async (context, next) =>
 app.UseAuthentication();
 app.UseAuthorization();
 
+var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
+
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "uploads")),
+    FileProvider = new PhysicalFileProvider(uploadsPath),
     RequestPath = "/api/uploads",
     OnPrepareResponse = ctx =>
     {
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end-plum.vercel.app");
+        var origin = ctx.Context.Request.Headers["Origin"].ToString();
+
+        var allowedOrigins = new[]
+        {
+            "http://localhost:5173",
+            "https://cle-front-end-plum.vercel.app"
+        };
+
+        if (allowedOrigins.Contains(origin))
+        {
+            ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", origin);
+        }
+
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, OPTIONS");
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
