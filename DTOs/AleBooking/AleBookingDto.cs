@@ -8,32 +8,31 @@ public class AleBookingDto
     public string ROTNumber { get; set; } = string.Empty;
     public string AWBNumber { get; set; } = string.Empty;
     public string HouseAWBNumber { get; set; } = string.Empty;
-    public string MovementType { get; set; } = string.Empty;
+    public string? MovementType { get; set; }
     public string? TripType { get; set; }
     public string FlightNumber { get; set; } = string.Empty;
-    public string TerminalLocation { get; set; } = string.Empty;
+    public string? TerminalLocation { get; set; }
     public Models.Company? Terminal { get; set; }
-    public string TerminalLocationName {get; set; } = string.Empty;
+    public string? TerminalLocationName {get; set; }
     public DateOnly ETA { get; set; }
     public string? SealNumber { get; set; }
     public string? ForwardingRemarks { get; set; }
     public string? HaulierRemarks { get; set; }
     public string? TerminalRemarks { get; set; }
-    public string ForwardingId {get; set; } = string.Empty;
+    public string? ForwardingId { get; set; }
     public Models.Company? Forwarding { get; set; }
-    public string ForwardingName {get; set; } = string.Empty;
-    public string HaulierName {get; set; } = string.Empty;
-    public string AirlineId { get; set; } = string.Empty;
+    public string? ForwardingName {get; set; }
+    public string? AirlineId { get; set; }
     public Models.Company? Airline { get; set; }
-    public string AirlineName { get; set; } = string.Empty;
-    public string BillingParty { get; set; } = string.Empty;
+    public string? AirlineName { get; set; }
+    public string? BillingParty { get; set; }
     public string? CustomFormType { get; set; }
     public string? CustomFormNo { get; set; }
     public string? CustomReceiptNo { get; set; }
     public string? DICNumber { get; set; }
     public string? ZBNumber { get; set; }
-    public int TruckQuantity { get; set; }
-    public string CarrierReferenceNumber { get; set; } = string.Empty;
+    public int? TruckQuantity { get; set; }
+    public string? CarrierReferenceNumber { get; set; }
     public int? TotalPackageQuantity { get; set; }
     public int? UpdatedTotalPackageQuantity { get; set; }
     public double? Weight { get; set; }
@@ -45,7 +44,7 @@ public class AleBookingDto
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }
     public string? Size { get; set; }
-    public string? BookingAgentId { get; set; } = string.Empty;
+    public string? BookingAgentId { get; set; }
     public Models.Company? BookingAgentCompany { get; set; }
 }
 
@@ -60,14 +59,14 @@ public class AleBookingCreateDto
     [Required]
     public string HouseAWBNumber { get; set; } = string.Empty;
 
-    public string MovementType { get; set; } = string.Empty;
+    public string? MovementType { get; set; }
 
     public string? TripType { get; set; }
     
     [Required]
     public string FlightNumber { get; set; } = string.Empty;
 
-    public string TerminalLocation { get; set; } = string.Empty;
+    public string? TerminalLocation { get; set; }
     
     public DateOnly ETA { get; set; }
     public string? SealNumber { get; set; }
@@ -75,19 +74,19 @@ public class AleBookingCreateDto
     public string? HaulierRemarks { get; set; }
     public string? TerminalRemarks { get; set; }
 
-    public string ForwardingId { get; set; } = string.Empty;
+    public string? ForwardingId { get; set; }
 
-    public string AirlineId { get; set; } = string.Empty;
+    public string? AirlineId { get; set; }
 
-    public string BillingParty { get; set; } = string.Empty;
+    public string? BillingParty { get; set; }
     
     public string? CustomFormType { get; set; }
     public string? CustomFormNo { get; set; }
     public string? CustomReceiptNo { get; set; }
     public string? DICNumber { get; set; }
     public string? ZBNumber { get; set; }
-    public int TruckQuantity { get; set; }
-    public string CarrierReferenceNumber { get; set; } = string.Empty;
+    public int? TruckQuantity { get; set; }
+    public string? CarrierReferenceNumber { get; set; }
     public int? TotalPackageQuantity { get; set; }
     public double? Weight { get; set; }
     public string? ConsigneeId { get; set; }
@@ -96,11 +95,12 @@ public class AleBookingCreateDto
     public string? ExternalConsigneeAddress { get; set; }
     public string? ExternalConsigneeContact { get; set; }
     public string? Size { get; set; }
-    public string? BookingAgentId { get; set; } =  string.Empty;
+    public string? BookingAgentId { get; set; }
+    public int? UpdatedTotalPackageQuantity { get; set; }
+    public double? UpdatedWeight { get; set; }
 }
 
 public class AleBookingUpdateDto : AleBookingCreateDto
 {
-    public int? UpdatedTotalPackageQuantity { get; set; }
-    public double? UpdatedWeight { get; set; }
+    
 }

@@ -14,14 +14,14 @@ public class AleBooking
     [Required]
     public string HouseAWBNumber { get; set; } = string.Empty;
     
-    public string MovementType { get; set; } = string.Empty;
+    public string? MovementType { get; set; }
     
     [Required]
     public string FlightNumber { get; set; } = string.Empty;
     
     public string? TripType { get; set; }
     
-    public string TerminalLocation { get; set; } = string.Empty;
+    public string? TerminalLocation { get; set; }
     
     [ForeignKey("TerminalLocation")]
     public virtual Company? TerminalCompany { get; set; }
@@ -36,17 +36,17 @@ public class AleBooking
     
     public string? TerminalRemarks { get; set; }
     
-    public string ForwardingId { get; set; } = string.Empty;
+    public string? ForwardingId { get; set; }
     
     [ForeignKey("ForwardingId")]
     public virtual Company? ForwardingCompany { get; set; }
    
-    public string AirlineId { get; set; } = string.Empty;
+    public string? AirlineId { get; set; }
     
     [ForeignKey("AirlineId")]
     public virtual Company? AirlineCompany { get; set; }
     
-    public string BillingParty { get; set; } = string.Empty;
+    public string? BillingParty { get; set; }
     
     public string? CustomFormType { get; set; }
     
@@ -58,9 +58,9 @@ public class AleBooking
     
     public string? ZBNumber { get; set; }
     
-    public int TruckQuantity { get; set; }
+    public int? TruckQuantity { get; set; }
     
-    public string CarrierReferenceNumber { get; set; } = string.Empty;
+    public string? CarrierReferenceNumber { get; set; }
     
     public int? TotalPackageQuantity { get; set; }
     
