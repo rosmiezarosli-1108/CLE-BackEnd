@@ -22,7 +22,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(
+                "http://localhost:5173",
+                "https://cle-front-end-plum.vercel.app"
+            )
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -99,7 +102,7 @@ app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS" && context.Request.Path.StartsWithSegments("/api/uploads"))
     {
-        context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:5173");
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end-plum.vercel.app");
         context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
         context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, OPTIONS");
         context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -119,7 +122,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/api/uploads",
     OnPrepareResponse = ctx =>
     {
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:5173");
+        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end-plum.vercel.app");
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, OPTIONS");
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
