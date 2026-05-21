@@ -14,7 +14,7 @@ public class AleBookingDto
     public string? TerminalLocation { get; set; }
     public Models.Company? Terminal { get; set; }
     public string? TerminalLocationName {get; set; }
-    public DateOnly ETA { get; set; }
+    public DateOnly? ETA { get; set; }
     public string? SealNumber { get; set; }
     public string? ForwardingRemarks { get; set; }
     public string? HaulierRemarks { get; set; }
@@ -68,7 +68,7 @@ public class AleBookingCreateDto
 
     public string? TerminalLocation { get; set; }
     
-    public DateOnly ETA { get; set; }
+    public DateOnly? ETA { get; set; }
     public string? SealNumber { get; set; }
     public string? ForwardingRemarks { get; set; }
     public string? HaulierRemarks { get; set; }
