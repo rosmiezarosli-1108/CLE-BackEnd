@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
                 "http://localhost:5173",
-                "https://cle-front-end-plum.vercel.app"
+                "https://cle-front-end.vercel.app"
             )
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -102,7 +102,7 @@ app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS" && context.Request.Path.StartsWithSegments("/api/uploads"))
     {
-        context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end-plum.vercel.app");
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end.vercel.app");
         context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
         context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, OPTIONS");
         context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -133,7 +133,7 @@ app.UseStaticFiles(new StaticFileOptions
         var allowedOrigins = new[]
         {
             "http://localhost:5173",
-            "https://cle-front-end-plum.vercel.app"
+            "https://cle-front-end.vercel.app"
         };
 
         if (allowedOrigins.Contains(origin))
