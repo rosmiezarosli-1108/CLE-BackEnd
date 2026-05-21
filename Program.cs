@@ -11,13 +11,13 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddScoped<AuthService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// 1. FIXED CORS POLICY: Support both the main vercel domain AND its subdomains
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", policy =>
@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
                 "http://localhost:5173",
                 "https://cle-front-end.vercel.app"
             )
+            .SetIsOriginAllowedToAllowWildcardSubdomains() // Handles automatic Vercel preview URLs if needed
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -50,7 +51,6 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
 
-        // This event tells the middleware to look for the JWT in the 'userToken' cookie
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -63,6 +63,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// Scoped Services
 builder.Services.AddScoped<IAssignedHaulierService, AssignedHaulierService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IContainerAddressService, ContainerAddressService>();
@@ -82,7 +83,7 @@ builder.Services.AddScoped<IAleContainerAddressService, AleContainerAddressServi
 builder.Services.AddScoped<IAleContainerService, AleContainerService>();
 builder.Services.AddScoped<IAleBookingService, AleBookingService>();
 builder.Services.AddScoped<IAleBookingDocumentService, AleBookingDocumentService>();
-builder.Services.AddScoped < IAleAssignedHaulierService, AleAssignedHaulierService>();
+builder.Services.AddScoped<IAleAssignedHaulierService, AleAssignedHaulierService>();
 builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
@@ -94,10 +95,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// use when deploy on real production server
-//app.UseHttpsRedirection();
-app.UseCors("AllowReact");
 
+// 2. CRITICAL FIX: Move Routing and CORS to the absolute top of the request pipeline
+app.UseRouting(); 
+app.UseCors("AllowReact"); 
+
+// Manual OPTIONS interceptor for uploads
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS" && context.Request.Path.StartsWithSegments("/api/uploads"))
@@ -116,7 +119,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
-
 if (!Directory.Exists(uploadsPath))
 {
     Directory.CreateDirectory(uploadsPath);
@@ -129,7 +131,6 @@ app.UseStaticFiles(new StaticFileOptions
     OnPrepareResponse = ctx =>
     {
         var origin = ctx.Context.Request.Headers["Origin"].ToString();
-
         var allowedOrigins = new[]
         {
             "http://localhost:5173",
@@ -148,5 +149,4 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.MapControllers();
-
 app.Run();
