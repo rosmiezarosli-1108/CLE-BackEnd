@@ -29,7 +29,9 @@ builder.Services.AddCors(options =>
             .SetIsOriginAllowedToAllowWildcardSubdomains() // Handles automatic Vercel preview URLs if needed
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials();
+            .AllowCredentials()
+            // Add this line to ensure preflight requests are cached and cleared properly
+            .SetPreflightMaxAge(TimeSpan.FromMinutes(10));
     });
 });
 
