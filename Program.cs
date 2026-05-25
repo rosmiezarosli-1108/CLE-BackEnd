@@ -100,21 +100,6 @@ if (app.Environment.IsDevelopment())
 app.UseRouting(); 
 app.UseCors("AllowReact"); 
 
-// Manual OPTIONS interceptor for uploads
-app.Use(async (context, next) =>
-{
-    if (context.Request.Method == "OPTIONS" && context.Request.Path.StartsWithSegments("/api/uploads"))
-    {
-        context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end.vercel.app/");
-        context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
-        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, OPTIONS");
-        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        context.Response.StatusCode = 200;
-        return;
-    }
-    await next();
-});
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -127,25 +112,9 @@ if (!Directory.Exists(uploadsPath))
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(uploadsPath),
-    RequestPath = "/api/uploads",
-    OnPrepareResponse = ctx =>
-    {
-        var origin = ctx.Context.Request.Headers["Origin"].ToString();
-        var allowedOrigins = new[]
-        {
-            "http://localhost:5173",
-            "https://cle-front-end.vercel.app"
-        };
-
-        if (allowedOrigins.Contains(origin))
-        {
-            ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", origin);
-        }
-
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, OPTIONS");
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    }
+    RequestPath = "/api/uploads"
+    // Cleaned: Removed manual CORS headers here because app.UseCors("AllowReact") 
+    // globally takes care of it for all static assets and endpoints.
 });
 
 app.MapControllers();
