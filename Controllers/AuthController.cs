@@ -37,9 +37,8 @@ public class AuthController : ControllerBase
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,       
-            // Note: Once you deploy to a production server with SSL, change these back to true and Strict
-            Secure = true,          // Sent only over HTTPS (use false for localhost development)
-            SameSite = SameSiteMode.Lax, // Protects against CSRF, change to strict later
+            Secure = true,               // Kept true for Production SSL tracking (Render)
+            SameSite = SameSiteMode.None, // Kept None to avoid Vercel Cookie rejection
             Path = "/",
             Domain = null,
             Expires = DateTime.UtcNow.AddDays(7)
@@ -47,12 +46,13 @@ public class AuthController : ControllerBase
         
         Response.Cookies.Append("userToken", token, cookieOptions);
         
+        // FIXED: Using safe navigation operators (?.) to prevent 500 NullReference exceptions during serialization
         return Ok(new
         {
             user.UserId,
             user.FullName,
             user.Access,
-            user.Company.Role,
+            Role = user.Company?.Role ?? "User", // Safeguards if Company tracking link isn't attached natively
             user.CompanyName
         });
     }
