@@ -24,8 +24,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
                 "http://localhost:5173",
-                "https://cle-front-end.vercel.app",
-                "https://cle-front-end.vercel.app/"
+                "https://cle-front-end.vercel.app"
             )
             .SetIsOriginAllowedToAllowWildcardSubdomains() // Handles automatic Vercel preview URLs if needed
             .AllowAnyMethod()
