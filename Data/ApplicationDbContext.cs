@@ -54,7 +54,7 @@ public class ApplicationDbContext : DbContext
             });
         });
         
-        modelBuilder.Entity<Company>().HasData(
+        /*modelBuilder.Entity<Company>().HasData(
             new Company
             {
                 CompanyCode = "A0001",
@@ -173,6 +173,6 @@ public class ApplicationDbContext : DbContext
                 Status = "Active",
                 UpdatedBy = "System"
             }
-            );
+            );*/
     }
 }

@@ -1,6 +1,7 @@
 using System.Text;
 using CLE_BackEnd.Services;
 using CLE_BackEnd.Data;
+using CLE_BackEnd.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -91,6 +92,140 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 
+// --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM START ---
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        
+        // Ensure that database tables are initialized structural wise
+        context.Database.EnsureCreated();
+
+        // Safe JSON column mapping data seeder for Companies
+        if (!context.Companies.Any())
+        {
+            context.Companies.AddRange(
+                new Company
+                {
+                    CompanyCode = "A0001",
+                    CompanyName = "ABC Forwarders",
+                    SSMNo = "123456-A",
+                    SSTNo = "W10-1234-5678",
+                    Role = "Forwarder",
+                    Region = new List<SystemRegion>
+                    {
+                        new SystemRegion { SystemName = "CLE", RegionCode = "PEN" },
+                        new SystemRegion { SystemName = "ALE", RegionCode = "PEN" }
+                    },
+                    ManagerName = "Pradeep",
+                    Address = "Butterworth, 13000, Penang",
+                    TelephoneNumber = "03-12345678",
+                    FaxNumber = "03-12345679",
+                    PICName = "Thanesh",
+                    HandphoneNumber = "012-3456789",
+                    EmailAddress = "nesh@gmail.com.my",
+                    CCEmailAddress = "finance@gmail.com.my",
+                    CLEKmailNotification = "operater@gmail.com"
+                },
+                new Company
+                {
+                    CompanyCode = "A0002",
+                    CompanyName = "ABC Haulier",
+                    SSMNo = "123456-B",
+                    SSTNo = "W11-1234-5678",
+                    Role = "Haulier",
+                    Region = new List<SystemRegion>
+                    {
+                        new SystemRegion { SystemName = "CLE", RegionCode = "PEN" },
+                        new SystemRegion { SystemName = "ALE", RegionCode = "PEN" }
+                    },
+                    ManagerName = "Tristen",
+                    Address = "Port Klang, 57000, Penang",
+                    TelephoneNumber = "03-12345678",
+                    FaxNumber = "03-12345679",
+                    PICName = "Lee Jia Jun",
+                    HandphoneNumber = "012-3456789",
+                    EmailAddress = "lee@hotmail.com.my",
+                    CCEmailAddress = "finance@hotmail.com.my",
+                    CLEKmailNotification = "operater@hotmail.com"
+                }
+            );
+            context.SaveChanges();
+        }
+
+        // Safe seeder for User Profiles
+        if (!context.Users.Any())
+        {
+            context.Users.AddRange(
+                new User
+                {
+                    UserId = "MNG00001",
+                    Password = "123456",
+                    FullName = "Pradeep",
+                    CompanyName = "ABC Forwarders",
+                    CompanyCode = "A0001",
+                    Access = "CLE & ALE",
+                    AccessLevel = "Full-Access",
+                    EmailAddress = "deep@gmail.com",
+                    ContactNumber = "0123456789",
+                    Status = "Active",
+                    UpdatedBy = "System"
+                },
+                new User
+                {
+                    UserId = "STF00001",
+                    Password = "123456",
+                    FullName = "Thanesh",
+                    CompanyName = "ABC Forwarders",
+                    CompanyCode = "A0001",
+                    Access = "CLE",
+                    AccessLevel = "Half-Access",
+                    EmailAddress = "nesh@gmail.com",
+                    ContactNumber = "0123456789",
+                    Status = "Active",
+                    UpdatedBy = "System"
+                },
+                new User
+                {
+                    UserId = "MNG00002",
+                    Password = "123456",
+                    FullName = "Tristen",
+                    CompanyName = "ABC Haulier",
+                    CompanyCode = "A0002",
+                    Access = "CLE & ALE",
+                    AccessLevel = "Full-Access",
+                    EmailAddress = "tristen@hotmail.com",
+                    ContactNumber = "0123456789",
+                    Status = "Active",
+                    UpdatedBy = "System"
+                },
+                new User
+                {
+                    UserId = "STF0002",
+                    Password = "123456",
+                    FullName = "Vincent",
+                    CompanyName = "ABC Haulier",
+                    CompanyCode = "A0002",
+                    Access = "ALE",
+                    AccessLevel = "Full-Access",
+                    EmailAddress = "vincent@hotmail.com",
+                    ContactNumber = "0123456789",
+                    Status = "Active",
+                    UpdatedBy = "System"
+                }
+            );
+            context.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Database initialization skipped or already seeded: {ex.Message}");
+    }
+}
+// --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
+
 // Force headers manually for every single incoming request
 app.Use(async (context, next) =>
 {
@@ -108,6 +243,7 @@ app.Use(async (context, next) =>
 
     await next();
 });
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -132,8 +268,6 @@ app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(uploadsPath),
     RequestPath = "/api/uploads"
-    // Cleaned: Removed manual CORS headers here because app.UseCors("AllowReact") 
-    // globally takes care of it for all static assets and endpoints.
 });
 
 app.MapControllers();
