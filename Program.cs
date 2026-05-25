@@ -135,8 +135,7 @@ app.UseStaticFiles(new StaticFileOptions
         var allowedOrigins = new[]
         {
             "http://localhost:5173",
-            "https://cle-front-end.vercel.app",
-            "https://cle-front-end.vercel.app/"
+            "https://cle-front-end.vercel.app"
         };
 
         if (allowedOrigins.Contains(origin))

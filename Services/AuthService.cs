@@ -17,11 +17,14 @@ public class AuthService : IAuthService
     {
         var user = await _dbContext.Users
             .Include(u => u.Company)
+            .ThenInclude(c => c.Region)
             .FirstOrDefaultAsync(u => u.UserId == userId && u.Password == password);
         
         if (user == null)
             return new AuthResult { ErrorMessage = "Invalid User ID or Password." };
-
+         // Add a null-conditional check to prevent crashes if Region database setup isn't populated
+        if (user.Company?.Region == null)
+            return new AuthResult { ErrorMessage = "Company region data is uninitialized." };
         bool isRegionRegistered = user.Company.Region.Any(r => 
             r.SystemName == access && r.RegionCode == region);
         
