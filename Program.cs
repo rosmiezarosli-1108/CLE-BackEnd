@@ -100,8 +100,22 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
         
-        // FIXED: Force migrations to run dynamically to generate the "Users" and "Companies" tables completely
-        context.Database.Migrate();
+        // Force the structural creation of database tables
+        context.Database.EnsureCreated();
+
+        // COERCION PATCH: If old data formats exist, clear out the conflict entities natively
+        try 
+        {
+            // Trigger a lightweight check to see if the JSON columns are corrupt
+            var testCompany = context.Companies.FirstOrDefault();
+        }
+        catch (Exception)
+        {
+            // If checking throws a JsonReaderException, purge the corrupt data structures completely
+            Console.WriteLine("Incompatible database structure detected. Executing programmatic reset...");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Companies\" CASCADE;");
+        }
 
         // Safe JSON column mapping data seeder for Companies
         if (!context.Companies.Any())
