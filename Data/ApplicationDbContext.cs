@@ -46,13 +46,13 @@ public class ApplicationDbContext : DbContext
         //     .WithMany(c => c.UpdateHistory)
         //     .HasForeignKey(a => a.ContainerId); // Force it to use ContainerId instead of AleContainerContainerId
         //
-        // modelBuilder.Entity<Company>(entity =>
-        // {
-        //     entity.OwnsMany(c => c.Region, r =>
-        //     {
-        //         r.ToJson(); 
-        //     });
-        // });
+        modelBuilder.Entity<Company>(entity =>
+        {
+            entity.OwnsMany(c => c.Region, r =>
+            {
+                r.ToJson(); 
+            });
+        });
         
         modelBuilder.Entity<Company>().HasData(
             new Company
