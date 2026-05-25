@@ -100,8 +100,8 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
         
-        // Ensure that database tables are initialized structural wise
-        context.Database.EnsureCreated();
+        // FIXED: Force migrations to run dynamically to generate the "Users" and "Companies" tables completely
+        context.Database.Migrate();
 
         // Safe JSON column mapping data seeder for Companies
         if (!context.Companies.Any())
