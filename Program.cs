@@ -112,21 +112,19 @@ using (var scope = app.Services.CreateScope())
     }
 }
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
-
-// 2. PIPELINE REORDER: Move Routing and CORS to the absolute top of the request pipeline
-app.UseRouting(); 
-app.UseCors("AllowReact"); 
-
-// 3. SECURITY MIDDLEWARE: Authenticate requests before reaching endpoints
-app.UseAuthentication();
-app.UseAuthorization();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// 2. CRITICAL FIX: Routing and native CORS handling must occur first
+app.UseRouting(); 
+app.UseCors("AllowReact"); 
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
 if (!Directory.Exists(uploadsPath))
