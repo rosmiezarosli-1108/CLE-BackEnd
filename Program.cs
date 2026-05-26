@@ -113,23 +113,13 @@ using (var scope = app.Services.CreateScope())
 }
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
 
-// Force headers manually for every single incoming request
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Append("Access-Control-Allow-Origin", "https://cle-front-end.vercel.app");
-    context.Response.Headers.Append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    context.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
+// 2. PIPELINE REORDER: Move Routing and CORS to the absolute top of the request pipeline
+app.UseRouting(); 
+app.UseCors("AllowReact"); 
 
-    if (context.Request.Method == "OPTIONS")
-    {
-        context.Response.StatusCode = 200;
-        await context.Response.WriteAsync("OK");
-        return;
-    }
-
-    await next();
-});
+// 3. SECURITY MIDDLEWARE: Authenticate requests before reaching endpoints
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -137,13 +127,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// 2. CRITICAL FIX: Move Routing and CORS to the absolute top of the request pipeline
-app.UseRouting(); 
-app.UseCors("AllowReact"); 
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
 if (!Directory.Exists(uploadsPath))
