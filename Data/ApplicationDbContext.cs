@@ -40,12 +40,12 @@ public class ApplicationDbContext : DbContext
         {
             fk.DeleteBehavior = DeleteBehavior.Restrict;
         }
+        // --- ACTIVATED FIX: Maps the relationship to ContainerId cleanly ---
+        modelBuilder.Entity<AleContainerAudit>()
+            .HasOne<AleContainer>()
+            .WithMany(c => c.UpdateHistory)
+            .HasForeignKey(a => a.ContainerId); // Force it to use ContainerId instead of AleContainerContainerId
         
-        // modelBuilder.Entity<AleContainerAudit>()
-        //     .HasOne<AleContainer>()
-        //     .WithMany(c => c.UpdateHistory)
-        //     .HasForeignKey(a => a.ContainerId); // Force it to use ContainerId instead of AleContainerContainerId
-        //
         modelBuilder.Entity<Company>(entity =>
         {
             entity.OwnsMany(c => c.Region, r =>
