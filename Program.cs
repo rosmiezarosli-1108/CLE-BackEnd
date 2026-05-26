@@ -100,128 +100,15 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
         
-        // Force the structural creation of database tables
+        // This is safe: It only builds the database tables if they are missing.
+        // It will NOT delete or overwrite existing data.
         context.Database.EnsureCreated();
-
-        // FORCE RESET: Directly clear out any legacy text rows that crash the JSON reader
-        Console.WriteLine("Executing clean database reset...");
-        context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" CASCADE;");
-        context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Companies\" CASCADE;");
-
-        // Safe JSON column mapping data seeder for Companies
-        context.Companies.AddRange(
-            new Company
-            {
-                CompanyCode = "A0001",
-                CompanyName = "ABC Forwarders",
-                SSMNo = "123456-A",
-                SSTNo = "W10-1234-5678",
-                Role = "Forwarder",
-                Region = new List<SystemRegion>
-                {
-                    new SystemRegion { SystemName = "CLE", RegionCode = "PEN" },
-                    new SystemRegion { SystemName = "ALE", RegionCode = "PEN" }
-                },
-                ManagerName = "Pradeep",
-                Address = "Butterworth, 13000, Penang",
-                TelephoneNumber = "03-12345678",
-                FaxNumber = "03-12345679",
-                PICName = "Thanesh",
-                HandphoneNumber = "012-3456789",
-                EmailAddress = "nesh@gmail.com.my",
-                CCEmailAddress = "finance@gmail.com.my",
-                CLEKmailNotification = "operater@gmail.com"
-            },
-            new Company
-            {
-                CompanyCode = "A0002",
-                CompanyName = "ABC Haulier",
-                SSMNo = "123456-B",
-                SSTNo = "W11-1234-5678",
-                Role = "Haulier",
-                Region = new List<SystemRegion>
-                {
-                    new SystemRegion { SystemName = "CLE", RegionCode = "PEN" },
-                    new SystemRegion { SystemName = "ALE", RegionCode = "PEN" }
-                },
-                ManagerName = "Tristen",
-                Address = "Port Klang, 57000, Penang",
-                TelephoneNumber = "03-12345678",
-                FaxNumber = "03-12345679",
-                PICName = "Lee Jia Jun",
-                HandphoneNumber = "012-3456789",
-                EmailAddress = "lee@hotmail.com.my",
-                CCEmailAddress = "finance@hotmail.com.my",
-                CLEKmailNotification = "operater@hotmail.com"
-            }
-        );
-        context.SaveChanges();
-
-        // Safe seeder for User Profiles
-        context.Users.AddRange(
-            new User
-            {
-                UserId = "MNG00001",
-                Password = "123456",
-                FullName = "Pradeep",
-                CompanyName = "ABC Forwarders",
-                CompanyCode = "A0001",
-                Access = "ALE",
-                AccessLevel = "Full-Access",
-                EmailAddress = "deep@gmail.com",
-                ContactNumber = "0123456789",
-                Status = "Active",
-                UpdatedBy = "System"
-            },
-            new User
-            {
-                UserId = "STF00001",
-                Password = "123456",
-                FullName = "Thanesh",
-                CompanyName = "ABC Forwarders",
-                CompanyCode = "A0001",
-                Access = "ALE",
-                AccessLevel = "Half-Access",
-                EmailAddress = "nesh@gmail.com",
-                ContactNumber = "0123456789",
-                Status = "Active",
-                UpdatedBy = "System"
-            },
-            new User
-            {
-                UserId = "MNG00002",
-                Password = "123456",
-                FullName = "Tristen",
-                CompanyName = "ABC Haulier",
-                CompanyCode = "A0002",
-                Access = "ALE",
-                AccessLevel = "Full-Access",
-                EmailAddress = "tristen@hotmail.com",
-                ContactNumber = "0123456789",
-                Status = "Active",
-                UpdatedBy = "System"
-            },
-            new User
-            {
-                UserId = "STF00002",
-                Password = "123456",
-                FullName = "Vincent",
-                CompanyName = "ABC Haulier",
-                CompanyCode = "A0002",
-                Access = "ALE",
-                AccessLevel = "Full-Access",
-                EmailAddress = "vincent@hotmail.com",
-                ContactNumber = "0123456789",
-                Status = "Active",
-                UpdatedBy = "System"
-            }
-        );
-        context.SaveChanges();
-        Console.WriteLine("Database seed replaced with proper JSON formatting successfully!");
+        
+        Console.WriteLine("Database connection verified and active.");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Database initialization issue: {ex.Message}");
+        Console.WriteLine($"Database verification issue: {ex.Message}");
     }
 }
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
