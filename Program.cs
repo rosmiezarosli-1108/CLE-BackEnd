@@ -18,20 +18,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 1. FIXED CORS POLICY: Support both the main vercel domain AND its subdomains
+// 1. FIXED CORS POLICY: Support both the main vercel domain AND local development
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", policy =>
     {
         policy.WithOrigins(
                 "http://localhost:5173",
-                "https://cle-front-end.vercel.app"
+                "https://cle-front-end.vercel.app" // Your real production frontend
             )
-            .SetIsOriginAllowedToAllowWildcardSubdomains() // Handles automatic Vercel preview URLs if needed
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
-            // Add this line to ensure preflight requests are cached and cleared properly
             .SetPreflightMaxAge(TimeSpan.FromMinutes(10));
     });
 });
@@ -99,11 +97,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        
-        // This is safe: It only builds the database tables if they are missing.
-        // It will NOT delete or overwrite existing data.
         context.Database.EnsureCreated();
-        
         Console.WriteLine("Database connection verified and active.");
     }
     catch (Exception ex)
@@ -112,6 +106,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
+
+
+// ==========================================
+// THE OLD app.Use(async...) CUSTOM BLOCK THAT 
+// WAS CAUSING THE ERROR HAS BEEN REMOVED FROM HERE
+// ==========================================
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -119,9 +121,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// 2. CRITICAL FIX: Routing and native CORS handling must occur first
+// 2. CRITICAL ENGINE ORDER: Routing must come before CORS, and CORS before Auth!
 app.UseRouting(); 
-app.UseCors("AllowReact"); 
+
+app.UseCors("AllowReact"); // This will now process requests natively without interference!
 
 app.UseAuthentication();
 app.UseAuthorization();
