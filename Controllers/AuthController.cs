@@ -34,14 +34,16 @@ public class AuthController : ControllerBase
         var user = authResult.User;
         
         var token = _tokenService.GenerateToken(user);
+        
+        // SAFARI/iOS COMPATIBLE COOKIE CONFIGURATION
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,       
-            Secure = true,               // Kept true for Production SSL tracking (Render)
-            SameSite = SameSiteMode.None, // Kept None to avoid Vercel Cookie rejection
+            Secure = true,                // Must be true for Cross-Site HTTPS tracking (Render)
+            SameSite = SameSiteMode.None,  // Must be None to prevent Vercel from losing the cookie
             Path = "/",
-            Domain = null,
-            Expires = DateTime.UtcNow.AddDays(7)
+            Domain = null,                // Keeps cookie tied precisely to the issuing server instance
+            MaxAge = TimeSpan.FromDays(7)  // Using MaxAge instead of Expires to bypass Safari UTC parsing bugs
         };
         
         Response.Cookies.Append("userToken", token, cookieOptions);
@@ -60,7 +62,15 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        Response.Cookies.Delete("userToken");
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Path = "/"
+        };
+        
+        Response.Cookies.Delete("userToken", cookieOptions);
         return Ok(new { message = "Logged out" });
     }
 }

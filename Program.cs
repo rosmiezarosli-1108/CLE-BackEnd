@@ -88,6 +88,13 @@ builder.Services.AddScoped<IAleAssignedHaulierService, AleAssignedHaulierService
 builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
+// GLOBAL COOKIE SECURITY INTERCEPTOR (FOR SAFARI / ITP COMPLIANCE)
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.Always; // Forces Secure cross-site transport policies across endpoints
+});
+
 var app = builder.Build();
 
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM START ---
@@ -108,12 +115,6 @@ using (var scope = app.Services.CreateScope())
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
 
 
-// ==========================================
-// THE OLD app.Use(async...) CUSTOM BLOCK THAT 
-// WAS CAUSING THE ERROR HAS BEEN REMOVED FROM HERE
-// ==========================================
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -121,10 +122,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// 2. CRITICAL ENGINE ORDER: Routing must come before CORS, and CORS before Auth!
+// 2. CRITICAL ENGINE ORDER: Routing -> CookiePolicy -> CORS -> Auth
 app.UseRouting(); 
 
-app.UseCors("AllowReact"); // This will now process requests natively without interference!
+app.UseCookiePolicy();   // 1st: Evaluate Safari/Global Cookie SameSite rules
+app.UseCors("AllowReact"); // 2nd: Process cross-domain preflight handshakes natively
 
 app.UseAuthentication();
 app.UseAuthorization();
