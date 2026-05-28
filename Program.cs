@@ -18,14 +18,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 1. FIXED CORS POLICY: Support both the main vercel domain AND local development
+// CORS Policy configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", policy =>
     {
         policy.WithOrigins(
                 "http://localhost:5173",
-                "https://cle-front-end.vercel.app" // Your real production frontend
+                "https://cle-front-end.vercel.app" 
             )
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -56,7 +56,17 @@ builder.Services.AddAuthentication(options =>
         {
             OnMessageReceived = context =>
             {
-                context.Token = context.Request.Cookies["userToken"];
+                // Inspect headers first for Authorization Bearer tokens sent by Axios interceptors
+                string authHeader = context.Request.Headers["Authorization"];
+                if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                {
+                    context.Token = authHeader.Substring("Bearer ".Length).Trim();
+                }
+                else
+                {
+                    // Fallback to cookie check if needed
+                    context.Token = context.Request.Cookies["userToken"];
+                }
                 return Task.CompletedTask;
             }
         };
@@ -88,13 +98,6 @@ builder.Services.AddScoped<IAleAssignedHaulierService, AleAssignedHaulierService
 builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
-// GLOBAL COOKIE SECURITY INTERCEPTOR (FOR SAFARI / ITP COMPLIANCE)
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-    options.MinimumSameSitePolicy = SameSiteMode.None;
-    options.Secure = CookieSecurePolicy.Always; // Forces Secure cross-site transport policies across endpoints
-});
-
 var app = builder.Build();
 
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM START ---
@@ -114,19 +117,14 @@ using (var scope = app.Services.CreateScope())
 }
 // --- AUTOMATIC PROGRAMMATIC SEEDING SYSTEM END ---
 
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// 2. CRITICAL ENGINE ORDER: Routing -> CookiePolicy -> CORS -> Auth
 app.UseRouting(); 
-
-app.UseCookiePolicy();   // 1st: Evaluate Safari/Global Cookie SameSite rules
-app.UseCors("AllowReact"); // 2nd: Process cross-domain preflight handshakes natively
+app.UseCors("AllowReact"); 
 
 app.UseAuthentication();
 app.UseAuthorization();
