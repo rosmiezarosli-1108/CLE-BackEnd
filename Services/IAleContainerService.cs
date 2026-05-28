@@ -13,4 +13,7 @@ public interface IAleContainerService
     Task<IEnumerable<AleContainerDto>> GetAllAleContainersByHaulier(string haulierId);
     Task<IEnumerable<AleContainerDto>> GetAllAleContainersByBookingAgent(string bookingAgentId);
     Task<IEnumerable<AleContainerDto>> GetAllAleContainersByConsignee(string consigneeId);
+    Task<IEnumerable<AleContainerDto>> GetContainersForAKPSAction();
+    Task<IEnumerable<AleContainerDto>> GetContainersForCustomAction();
+    Task<IEnumerable<AleContainerDto>> GetContainersForTerminalAction();
 }

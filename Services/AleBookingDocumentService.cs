@@ -52,11 +52,22 @@ public class AleBookingDocumentService : IAleBookingDocumentService
         {
             Directory.CreateDirectory(absoluteFolderPath);
         }
+        
+        var existingDocument = await _dbContext.AleBookingDocuments
+            .FirstOrDefaultAsync(d => d.ROTNumber == dto.ROTNumber && d.DocumentType == dto.DocumentType);
 
         string finalFilePath = "";
         
         if (dto.File != null)
         {
+            if (existingDocument != null && !string.IsNullOrEmpty(existingDocument.FilePath))
+            {
+                var oldPath = Path.Combine(projectRoot, existingDocument.FilePath.TrimStart('/'));
+                if (System.IO.File.Exists(oldPath))
+                {
+                    System.IO.File.Delete(oldPath);
+                }
+            }
             var fileNameOnly = Path.GetFileNameWithoutExtension(dto.File.FileName);
             var extension = Path.GetExtension(dto.File.FileName);
             var uniqueFileName = $"{fileNameOnly}_{Guid.NewGuid()}{extension}";
@@ -69,18 +80,34 @@ public class AleBookingDocumentService : IAleBookingDocumentService
             finalFilePath = $"/uploads/bookings/{safeBookingNo}/{uniqueFileName}";
         }
         
-        var aleBookingDocument = new Models.AleBookingDocument
+        if (existingDocument != null)
         {
-            BookingDocumentId = Guid.NewGuid(),
-            DocumentType = dto.DocumentType,
-            FileName = dto.FileName,
-            FilePath = finalFilePath,
-            UploadDate = DateTime.UtcNow,
-            ROTNumber = dto.ROTNumber,
-        };
-        await _dbContext.AleBookingDocuments.AddAsync(aleBookingDocument);
-        await _dbContext.SaveChangesAsync();
-        return await GetByIdAsync(aleBookingDocument.BookingDocumentId) ??  MapToDto(aleBookingDocument);
+            existingDocument.FileName = dto.FileName;
+            if (dto.File != null)
+            {
+                existingDocument.FilePath = finalFilePath;
+            }
+            existingDocument.UploadDate = DateTime.UtcNow;
+
+            _dbContext.AleBookingDocuments.Update(existingDocument);
+            await _dbContext.SaveChangesAsync();
+            return MapToDto(existingDocument);
+        }
+        else
+        {
+            var aleBookingDocument = new Models.AleBookingDocument
+            {
+                BookingDocumentId = Guid.NewGuid(),
+                DocumentType = dto.DocumentType,
+                FileName = dto.FileName,
+                FilePath = finalFilePath,
+                UploadDate = DateTime.UtcNow,
+                ROTNumber = dto.ROTNumber,
+            };
+            await _dbContext.AleBookingDocuments.AddAsync(aleBookingDocument);
+            await _dbContext.SaveChangesAsync();
+            return await GetByIdAsync(aleBookingDocument.BookingDocumentId) ?? MapToDto(aleBookingDocument);
+        }
     }
 
     public async Task<AleBookingDocumentDto?> UpdateAsync(Guid id, string documentType, string? newFileName, IFormFile? file)
@@ -130,6 +157,19 @@ public class AleBookingDocumentService : IAleBookingDocumentService
             .FirstOrDefaultAsync(b => b.BookingDocumentId == id);
         if (aleBookingDocument == null)
             return false;
+
+        try
+        {
+            var absoluteFilePath = Path.Combine(Directory.GetCurrentDirectory(), 
+                aleBookingDocument.FilePath.TrimStart('/'));
+
+            if (System.IO.File.Exists(absoluteFilePath))
+                System.IO.File.Delete(absoluteFilePath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Physical file clean up skipped or failed: {ex.Message}");
+        }
 
         _dbContext.AleBookingDocuments.Remove(aleBookingDocument);
         await _dbContext.SaveChangesAsync();

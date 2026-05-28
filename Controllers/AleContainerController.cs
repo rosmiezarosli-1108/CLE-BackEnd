@@ -107,4 +107,25 @@ public class AleContainerController : ControllerBase
         var aleContainers = await _aleContainerService.GetAllAleContainersByConsignee(id);
         return Ok(aleContainers);
     }
+    
+    [HttpGet("action/akps")]
+    public async Task<IActionResult> GetContainersForAKPSAction()
+    {
+        var aleContainers = await _aleContainerService.GetContainersForAKPSAction();
+        return Ok(aleContainers);
+    }
+    
+    [HttpGet("action/custom")]
+    public async Task<IActionResult> GetContainersForCustomAction()
+    {
+        var aleContainers = await _aleContainerService.GetContainersForCustomAction();
+        return Ok(aleContainers);
+    }
+    
+    [HttpGet("action/terminal")]
+    public async Task<IActionResult> GetContainersForTerminalAction()
+    {
+        var aleContainers = await _aleContainerService.GetContainersForTerminalAction();
+        return Ok(aleContainers);
+    }
 }
