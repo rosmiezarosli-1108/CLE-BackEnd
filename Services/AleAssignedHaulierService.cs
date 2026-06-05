@@ -17,7 +17,7 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
         DriverId =  aleAssignedHaulier.DriverId,
         Driver =  aleAssignedHaulier.Driver,
         TimeSlotId = aleAssignedHaulier.TimeSlotId,
-        TimeSlot =  aleAssignedHaulier.TimeSlot,
+        AleTimeSlot =  aleAssignedHaulier.AleTimeSlot,
         TrailerId = aleAssignedHaulier.TrailerId,
         Trailer =  aleAssignedHaulier.Trailer,
         ContainerId = aleAssignedHaulier.ContainerId,
@@ -39,7 +39,7 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
         var aleAssignedHauliers = await _dbContext.AleAssignedHauliers
             .Include(a => a.Driver)
             .Include(a => a.PrimeMover)
-            .Include(a => a.TimeSlot)
+            .Include(a => a.AleTimeSlot)
             .Include(a => a.Trailer)
             .ToListAsync();
         return aleAssignedHauliers.Select(MapToDto);
@@ -50,7 +50,7 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
         var AleAssignedHaulier = await _dbContext.AleAssignedHauliers
             .Include(a => a.Driver)
             .Include(a => a.PrimeMover)
-            .Include(a => a.TimeSlot)
+            .Include(a => a.AleTimeSlot)
             .Include(a => a.Trailer)
             .FirstOrDefaultAsync(x => x.Id == id);
         return AleAssignedHaulier == null? null : MapToDto(AleAssignedHaulier);
@@ -117,7 +117,7 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
         var aleAssignedHaulier = await _dbContext.AleAssignedHauliers
             .Include(a => a.Driver)
             .Include(a => a.PrimeMover)
-            .Include(a => a.TimeSlot)
+            .Include(a => a.AleTimeSlot)
             .Include(a => a.Trailer)
             .Where(a => a.ContainerId == id)
             .FirstOrDefaultAsync();

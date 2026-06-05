@@ -23,4 +23,8 @@ public class AleTimeSlot
     
     [ForeignKey("TerminalId")]
     public virtual Company? Terminal { get; set; }
+    
+    public string? ChangeRemarks { get; set; }
+    
+    public virtual ICollection<AleAssignedHaulier> AssignedHauliers { get; set; } = new List<AleAssignedHaulier>();
 }

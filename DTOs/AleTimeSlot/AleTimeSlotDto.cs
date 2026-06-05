@@ -11,6 +11,7 @@ public class AleTimeSlotDto
     public int? DropOffTotalSlot { get; set; }
     public string TerminalId { get; set; } = string.Empty;
     public Models.Company? Terminal { get; set; }
+    public string? ChangeRemarks { get; set; }
 }
 
 public class AleTimeSlotCreateDto
@@ -46,4 +47,6 @@ public class AleTimeSlotUpdateDto
     
     [Required]
     public string TerminalId { get; set; } = string.Empty;
+    
+    public string? ChangeRemarks { get; set; }
 }

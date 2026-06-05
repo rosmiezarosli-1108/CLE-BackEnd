@@ -24,7 +24,7 @@ public class AleAssignedHaulier
     public Guid TimeSlotId { get; set; }
     
     [ForeignKey("TimeSlotId")]
-    public virtual TimeSlot? TimeSlot { get; set; }
+    public virtual AleTimeSlot? AleTimeSlot { get; set; }
     
     public Guid? TrailerId { get; set; }
     

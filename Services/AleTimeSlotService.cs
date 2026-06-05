@@ -18,6 +18,7 @@ public class AleTimeSlotService : IAleTimeSlotService
         DropOffTotalSlot = AleTimeSlot.DropOffTotalSlot,
         Terminal = AleTimeSlot.Terminal,
         TerminalId = AleTimeSlot.TerminalId,
+        ChangeRemarks =  AleTimeSlot.ChangeRemarks,
     };
     
     public AleTimeSlotService(ApplicationDbContext dbContext)
@@ -68,6 +69,7 @@ public class AleTimeSlotService : IAleTimeSlotService
         AleTimeSlot.PickUpTotalSlot = dto.PickUpTotalSlot;
         AleTimeSlot.DropOffTotalSlot = dto.DropOffTotalSlot;
         AleTimeSlot.TerminalId = dto.TerminalId;
+        AleTimeSlot.ChangeRemarks = dto.ChangeRemarks;
 
         await _dbContext.SaveChangesAsync();
         return await GetByIdAsync(AleTimeSlot.Id);

@@ -28,6 +28,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<AleAssignedHaulier> AleAssignedHauliers { get; set; }
     public DbSet<AleTimeSlot> AleTimeSlots { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<AleTerminalSchedule> AleTerminalSchedules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

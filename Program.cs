@@ -1,4 +1,5 @@
 using System.Text;
+using CLE_BackEnd.BackgroundWorkers;
 using CLE_BackEnd.Services;
 using CLE_BackEnd.Data;
 using CLE_BackEnd.Models;
@@ -97,6 +98,8 @@ builder.Services.AddScoped<IAleBookingDocumentService, AleBookingDocumentService
 builder.Services.AddScoped<IAleAssignedHaulierService, AleAssignedHaulierService>();
 builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IAleTerminalScheduleService, AleTerminalScheduleService>();
+builder.Services.AddHostedService<TimeSlotBackgroundWorker>();
 
 var app = builder.Build();
 

@@ -10,7 +10,7 @@ public class AleAssignedHaulierDto
     public Guid PMId { get; set; }
     public Models.PrimeMover? PrimeMover { get; set; }
     public Guid TimeSlotId { get; set; }
-    public Models.TimeSlot? TimeSlot { get; set; }
+    public Models.AleTimeSlot? AleTimeSlot { get; set; }
     public Guid? TrailerId { get; set; }
     public Models.Trailer? Trailer { get; set; }
     public int ContainerId { get; set; }
