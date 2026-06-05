@@ -24,9 +24,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact", policy =>
     {
-        policy.WithOrigins(
-                "http://localhost:5173",
-                "https://cle-front-end.vercel.app" 
+        policy.SetIsOriginAllowed(origin => 
+                    origin == "http://localhost:5173" || 
+                    origin == "https://cle-front-end.vercel.app" || 
+                    origin.EndsWith(".vercel.app") // <-- Allows any Vercel preview deployment URL
             )
             .AllowAnyMethod()
             .AllowAnyHeader()
