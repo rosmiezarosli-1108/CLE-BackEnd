@@ -110,7 +110,10 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
-        context.Database.EnsureCreated();
+        //context.Database.EnsureCreated();
+        // ❌ CHANGE THIS: context.Database.EnsureCreated();
+        //  FORCE EF CORE TO CREATE MISSING TABLES:
+        context.Database.Migrate();
         Console.WriteLine("Database connection verified and active.");
     }
     catch (Exception ex)
