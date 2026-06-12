@@ -30,25 +30,14 @@ public class AuthController : ControllerBase
         {
             return Unauthorized(new { message = authResult.ErrorMessage });
         }
-        
+    
         var user = authResult.User;
-        
         var token = _tokenService.GenerateToken(user);
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,       
-            // Note: Once you deploy to a production server with SSL, change these back to true and Strict
-            Secure = true,          // Sent only over HTTPS (use false for localhost development)
-            SameSite = SameSiteMode.None, // Protects against CSRF, change to strict later
-            Path = "/",
-            Domain = null,
-            Expires = DateTime.UtcNow.AddDays(7)
-        };
-        
-        Response.Cookies.Append("userToken", token, cookieOptions);
-        
+    
+        // Return the token inside the JSON body instead of setting a Cookie
         return Ok(new
         {
+            Token = token, // <-- Add this line
             user.UserId,
             user.FullName,
             user.Access,
