@@ -29,7 +29,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<AleTimeSlot> AleTimeSlots { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<AleTerminalSchedule> AleTerminalSchedules { get; set; }
-
+    public DbSet<AleQRCode> AleQRCodes { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

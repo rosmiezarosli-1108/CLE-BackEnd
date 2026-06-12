@@ -9,4 +9,5 @@ public class AuthResult
 public interface IAuthService
 {
     Task<AuthResult> AuthenticateAsync(string userId, string password, string region, string access);
-}   
+    Task<bool> ResetPasswordAsync(string userId, string emailAddress, string newPassword);
+}

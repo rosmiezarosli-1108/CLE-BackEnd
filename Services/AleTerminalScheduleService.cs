@@ -16,10 +16,12 @@ public class DayRuleHelper
 public class AleTerminalScheduleService : IAleTerminalScheduleService
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly INotificationService _notifService;
 
-    public AleTerminalScheduleService(ApplicationDbContext dbContext)
+    public AleTerminalScheduleService(ApplicationDbContext dbContext, INotificationService notifService)
     {
         _dbContext = dbContext;
+        _notifService = notifService;
     }
 
     public static AleTerminalScheduleDto MapToDto(AleTerminalSchedule model) => new()
@@ -68,11 +70,11 @@ public class AleTerminalScheduleService : IAleTerminalScheduleService
         template.SunStart = dto.SunStart; template.SunEnd = dto.SunEnd; template.SunBreakStart = dto.SunBreakStart; template.SunBreakEnd = dto.SunBreakEnd;
 
         await _dbContext.SaveChangesAsync();
-        await GenerateInitialSlotsAsync(template);
+        await GenerateInitialSlotsAsync(template, dto.ChangeRemarks);
         return MapToDto(template);
     }
 
-    private async Task GenerateInitialSlotsAsync(AleTerminalSchedule template)
+    private async Task GenerateInitialSlotsAsync(AleTerminalSchedule template, string? changeRemark)
     {
         var startDate = DateOnly.FromDateTime(DateTime.Today);
         var endDate = startDate.AddDays(30);
@@ -80,46 +82,175 @@ public class AleTerminalScheduleService : IAleTerminalScheduleService
 
         while (currentDate <= endDate)
         {
-            await ClearUnbookedSlotsForDateAsync(template.TerminalId, currentDate);
-            bool exists = await _dbContext.AleTimeSlots.AnyAsync(s => s.Date == currentDate && s.TerminalId == template.TerminalId);
-            if (!exists)
+            var existingSlots = await _dbContext.AleTimeSlots
+                .Include(t => t.AssignedHauliers)
+                .ThenInclude(ah => ah.AleContainer)
+                .Where(t => t.TerminalId == template.TerminalId && t.Date == currentDate)
+                .ToListAsync();
+
+            var bookedSlots = existingSlots.Where(t => t.AssignedHauliers != null && t.AssignedHauliers.Any()).ToList();
+            var unbookedSlots = existingSlots.Where(t => t.AssignedHauliers == null || !t.AssignedHauliers.Any())
+                .ToList();
+
+            // Clear old unbooked slots completely
+            if (unbookedSlots.Any())
             {
-                var rule = GetDayRule(template, currentDate.DayOfWeek);
-                if (!string.IsNullOrEmpty(rule.Start) && !string.IsNullOrEmpty(rule.End))
+                _dbContext.AleTimeSlots.RemoveRange(unbookedSlots);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            // Build a list of valid time strings based on the current Terminal rule
+            var rule = GetDayRule(template, currentDate.DayOfWeek);
+            List<string> validTimeSlotsForNewRules = new List<string>();
+            if (!string.IsNullOrEmpty(rule.Start) && !string.IsNullOrEmpty(rule.End))
+            {
+                var startTime = TimeOnly.Parse(rule.Start);
+                var endTime = TimeOnly.Parse(rule.End);
+                var hasBreak = !string.IsNullOrEmpty(rule.BreakStart) && !string.IsNullOrEmpty(rule.BreakEnd);
+                var breakStart = hasBreak ? TimeOnly.Parse(rule.BreakStart) : TimeOnly.MinValue;
+                var breakEnd = hasBreak ? TimeOnly.Parse(rule.BreakEnd) : TimeOnly.MinValue;
+
+                var loopTime = startTime;
+                while (loopTime.AddMinutes(30) <= endTime)
                 {
-                    var startTime = TimeOnly.Parse(rule.Start);
-                    var endTime = TimeOnly.Parse(rule.End);
-                    var hasBreak = !string.IsNullOrEmpty(rule.BreakStart) && !string.IsNullOrEmpty(rule.BreakEnd);
-                    var breakStart = hasBreak ? TimeOnly.Parse(rule.BreakStart) : TimeOnly.MinValue;
-                    var breakEnd = hasBreak ? TimeOnly.Parse(rule.BreakEnd) : TimeOnly.MinValue;
-
-                    var loopTime = startTime;
-                    while (loopTime.AddMinutes(30) <= endTime)
+                    var slotEndTime = loopTime.AddMinutes(30);
+                    string formattedTimeRange = $"{loopTime:HH:mm} - {slotEndTime:HH:mm}";
+                    if (hasBreak && (loopTime < breakEnd && slotEndTime > breakStart))
                     {
-                        var slotEndTime = loopTime.AddMinutes(30);
-                        if (hasBreak && (loopTime < breakEnd && slotEndTime > breakStart))
-                        {
-                            loopTime = slotEndTime;
-                            continue;
-                        }
-
-                        var slot = new Models.AleTimeSlot
-                        {
-                            Id = Guid.NewGuid(),
-                            Date = currentDate,
-                            Time = $"{loopTime:HH:mm} - {slotEndTime:HH:mm}",
-                            PickUpTotalSlot = template.MaximumPickUpSlots,
-                            DropOffTotalSlot = template.MaximumDropOffSlots,
-                            TerminalId = template.TerminalId
-                        };
-                        await _dbContext.AleTimeSlots.AddAsync(slot);
                         loopTime = slotEndTime;
+                        continue;
                     }
+
+                    validTimeSlotsForNewRules.Add(formattedTimeRange);
+                    loopTime = slotEndTime;
                 }
             }
+
+            // Handle existing booked slots (Cancel if outside hours, Keep if inside)
+            foreach (var bookedSlot in bookedSlots)
+            {
+                bool isStillValid = false;
+
+                if (!string.IsNullOrEmpty(rule.Start) && !string.IsNullOrEmpty(rule.End))
+                {
+                    var parts = bookedSlot.Time.Split('-');
+                    if (parts.Length == 2)
+                    {
+                        var bookedStart = TimeOnly.Parse(parts[0].Trim());
+                        var bookedEnd = TimeOnly.Parse(parts[1].Trim());
+
+                        var ruleStart = TimeOnly.Parse(rule.Start);
+                        var ruleEnd = TimeOnly.Parse(rule.End);
+
+                        // Check if it fits inside the new general window limits
+                        bool insideOperatingHours = bookedStart >= ruleStart && bookedEnd <= ruleEnd;
+
+                        // Verify it does not overlap with break windows
+                        bool isDuringBreak = false;
+                        if (!string.IsNullOrEmpty(rule.BreakStart) && !string.IsNullOrEmpty(rule.BreakEnd))
+                        {
+                            var breakStart = TimeOnly.Parse(rule.BreakStart);
+                            var breakEnd = TimeOnly.Parse(rule.BreakEnd);
+                            
+                            if (bookedStart < breakEnd && bookedEnd > breakStart)
+                            {
+                                isDuringBreak = true;
+                            }
+                        }
+
+                        if (insideOperatingHours && !isDuringBreak)
+                        {
+                            isStillValid = true;
+                        }
+                    }
+                }
+
+                if (!isStillValid)
+                {
+                    // It's outside the new hours. Cancel it and notify the haulier
+                    bookedSlot.IsCancelled = true;
+                    bookedSlot.ChangeRemarks = changeRemark;
+                    _dbContext.AleTimeSlots.Update(bookedSlot);
+
+                    foreach (var assignment in bookedSlot.AssignedHauliers)
+                    {
+                        if (assignment.AleContainer != null)
+                        {
+                            assignment.AleContainer.Status = "Assigned";
+                            assignment.AleContainer.EnrouteTime = null;
+                            assignment.AleContainer.AssignedTime = DateTime.UtcNow;
+                            _dbContext.AleContainers.Update(assignment.AleContainer);
+                        }
+
+                        string notificationMessage =
+                            $"Terminal changed operating schedule for slot {bookedSlot.Date} ({bookedSlot.Time}). Reason: {changeRemark ?? "Operational Adjustment"}";
+                        await _notifService.CreateNotification(
+                            assignment.HaulierId,
+                            notificationMessage,
+                            assignment.ROTNumber,
+                            assignment.ContainerId);
+                        
+                        _dbContext.AleAssignedHauliers.Remove(assignment);
+                    }
+                }
+                else
+                {
+                    bookedSlot.IsCancelled = false;
+                    _dbContext.AleTimeSlots.Update(bookedSlot);
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            // Generate new unbooked time slots for any empty gaps in the hours rule
+            if (!string.IsNullOrEmpty(rule.Start) && !string.IsNullOrEmpty(rule.End))
+            {
+                var startTime = TimeOnly.Parse(rule.Start);
+                var endTime = TimeOnly.Parse(rule.End);
+                var hasBreak = !string.IsNullOrEmpty(rule.BreakStart) && !string.IsNullOrEmpty(rule.BreakEnd);
+                var breakStart = hasBreak ? TimeOnly.Parse(rule.BreakStart) : TimeOnly.MinValue;
+                var breakEnd = hasBreak ? TimeOnly.Parse(rule.BreakEnd) : TimeOnly.MinValue;
+
+                var loopTime = startTime;
+                while (loopTime.AddMinutes(30) <= endTime)
+                {
+                    var slotEndTime = loopTime.AddMinutes(30);
+                    string formattedTimeRange = $"{loopTime:HH:mm} - {slotEndTime:HH:mm}";
+
+                    if (hasBreak && (loopTime < breakEnd && slotEndTime > breakStart))
+                    {
+                        loopTime = slotEndTime;
+                        continue;
+                    }
+
+                    // Don't create a new slot if an active booking exists here
+                    bool slotAlreadyExists = bookedSlots.Any(b => b.Time == formattedTimeRange && !b.IsCancelled);
+                    if (slotAlreadyExists)
+                    {
+                        loopTime = slotEndTime;
+                        continue;
+                    }
+
+                    var newSlot = new Models.AleTimeSlot
+                    {
+                        Id = Guid.NewGuid(),
+                        Date = currentDate,
+                        Time = formattedTimeRange,
+                        PickUpTotalSlot = template.MaximumPickUpSlots,
+                        DropOffTotalSlot = template.MaximumDropOffSlots,
+                        TerminalId = template.TerminalId,
+                        ChangeRemarks = null,
+                        IsCancelled = false
+                    };
+
+                    await _dbContext.AleTimeSlots.AddAsync(newSlot);
+                    loopTime = slotEndTime;
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
             currentDate = currentDate.AddDays(1);
         }
-        await _dbContext.SaveChangesAsync();
     }
 
     private async Task ClearUnbookedSlotsForDateAsync(string terminalId, DateOnly date)

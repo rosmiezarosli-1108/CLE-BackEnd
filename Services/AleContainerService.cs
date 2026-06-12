@@ -172,7 +172,7 @@ public class AleContainerService : IAleContainerService
         {
             await _notificationService.CreateNotification(
                 aleContainer.HaulierId, 
-                $"Booking {aleContainer.ROTNumber} has been Rejected by the Forwarder.",
+                $"Booking {aleContainer.ROTNumber} has been Rejected by the Forwarding.",
                 aleContainer.ROTNumber,
                 aleContainer.ContainerId
             );

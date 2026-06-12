@@ -12,6 +12,7 @@ public class AleTimeSlotDto
     public string TerminalId { get; set; } = string.Empty;
     public Models.Company? Terminal { get; set; }
     public string? ChangeRemarks { get; set; }
+    public bool IsCancelled { get; set; } = false;
 }
 
 public class AleTimeSlotCreateDto
@@ -28,6 +29,8 @@ public class AleTimeSlotCreateDto
     
     [Required]
     public string TerminalId { get; set; } = string.Empty;
+    
+    public bool IsCancelled { get; set; } = false; 
 }
 
 public class AleTimeSlotUpdateDto
@@ -49,4 +52,6 @@ public class AleTimeSlotUpdateDto
     public string TerminalId { get; set; } = string.Empty;
     
     public string? ChangeRemarks { get; set; }
+    
+    public bool? IsCancelled { get; set; }
 }

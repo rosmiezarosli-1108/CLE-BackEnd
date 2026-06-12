@@ -89,7 +89,7 @@ public class UserService : IUserService
         var user = new Models.User
         {
             UserId = newCode,
-            Password = dto.Password,
+            Password = BCrypt.Net.BCrypt.EnhancedHashPassword(dto.Password, workFactor: 12),
             FullName = dto.FullName,
             CompanyCode = dto.CompanyCode,
             CompanyName = company?.CompanyName ?? "Unknown Company",
@@ -118,13 +118,13 @@ public class UserService : IUserService
                 throw new Exception("Current password is required to set a new password.");
             }
 
-            bool isPasswordValid = dto.CurrentPassword == user.Password;
+            bool isPasswordValid = BCrypt.Net.BCrypt.EnhancedVerify(dto.CurrentPassword, user.Password);
 
             if (!isPasswordValid)
             {
                 throw new Exception("The current password you entered is incorrect.");
             }
-            user.Password = dto.NewPassword;
+            user.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(dto.NewPassword, workFactor: 12);
         }
 
         var companyName = await _dbContext.Companies.Where(c => c.CompanyCode == dto.CompanyCode)

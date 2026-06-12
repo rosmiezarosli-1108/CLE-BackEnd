@@ -9,25 +9,33 @@ public class AleAssignedHaulierService : IAleAssignedHaulierService
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public static AleAssignedHaulierDto MapToDto(AleAssignedHaulier aleAssignedHaulier) => new()
+    public static AleAssignedHaulierDto MapToDto(AleAssignedHaulier aleAssignedHaulier)
     {
-        Id = aleAssignedHaulier.Id,
-        PMId = aleAssignedHaulier.PMId,
-        PrimeMover =  aleAssignedHaulier.PrimeMover,
-        DriverId =  aleAssignedHaulier.DriverId,
-        Driver =  aleAssignedHaulier.Driver,
-        TimeSlotId = aleAssignedHaulier.TimeSlotId,
-        AleTimeSlot =  aleAssignedHaulier.AleTimeSlot,
-        TrailerId = aleAssignedHaulier.TrailerId,
-        Trailer =  aleAssignedHaulier.Trailer,
-        ContainerId = aleAssignedHaulier.ContainerId,
-        AleContainer = aleAssignedHaulier.AleContainer,
-        ROTNumber = aleAssignedHaulier.ROTNumber,
-        AleBooking = aleAssignedHaulier.AleBooking,
-        HaulierId = aleAssignedHaulier.HaulierId,
-        PassNumber =  aleAssignedHaulier.PassNumber,
-        ConsigneeTimeSlot =  aleAssignedHaulier.ConsigneeTimeSlot,
-    };
+        if (aleAssignedHaulier.AleTimeSlot != null)
+        {
+            aleAssignedHaulier.AleTimeSlot.AssignedHauliers = null!;
+        }
+
+        return new AleAssignedHaulierDto
+        {
+            Id = aleAssignedHaulier.Id,
+            PMId = aleAssignedHaulier.PMId,
+            PrimeMover = aleAssignedHaulier.PrimeMover,
+            DriverId = aleAssignedHaulier.DriverId,
+            Driver = aleAssignedHaulier.Driver,
+            TimeSlotId = aleAssignedHaulier.TimeSlotId,
+            AleTimeSlot = aleAssignedHaulier.AleTimeSlot,
+            TrailerId = aleAssignedHaulier.TrailerId,
+            Trailer = aleAssignedHaulier.Trailer,
+            ContainerId = aleAssignedHaulier.ContainerId,
+            AleContainer = aleAssignedHaulier.AleContainer,
+            ROTNumber = aleAssignedHaulier.ROTNumber,
+            AleBooking = aleAssignedHaulier.AleBooking,
+            HaulierId = aleAssignedHaulier.HaulierId,
+            PassNumber = aleAssignedHaulier.PassNumber,
+            ConsigneeTimeSlot = aleAssignedHaulier.ConsigneeTimeSlot,
+        };
+    }
     
     public AleAssignedHaulierService(ApplicationDbContext dbContext)
     {

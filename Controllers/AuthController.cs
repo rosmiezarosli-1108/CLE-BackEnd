@@ -22,7 +22,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] Login request)
+    public async Task<IActionResult> Login([FromBody] LoginDto request)
     {
         var authResult = await _authService.AuthenticateAsync(request.UserId, request.Password, request.CompanyRegion, request.Access);
 
@@ -32,16 +32,27 @@ public class AuthController : ControllerBase
         }
         
         var user = authResult.User;
-        var token = _tokenService.GenerateToken(user);
         
-        // SAFARI COMPLIANCE FIX: Raw token string is passed via JSON payload, avoiding cookie storage completely
+        var token = _tokenService.GenerateToken(user);
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,       
+            // Note: Once you deploy to a production server with SSL, change these back to true and Strict
+            Secure = false,          // Sent only over HTTPS (use false for localhost development)
+            SameSite = SameSiteMode.Lax, // Protects against CSRF, change to strict later
+            Path = "/",
+            Domain = null,
+            Expires = DateTime.UtcNow.AddDays(7)
+        };
+        
+        Response.Cookies.Append("userToken", token, cookieOptions);
+        
         return Ok(new
         {
-            Token = token, // <-- Safely captured by frontend localStorage
             user.UserId,
             user.FullName,
             user.Access,
-            Role = user.Company?.Role ?? "User", 
+            user.Company.Role,
             user.CompanyName
         });
     }
@@ -49,6 +60,23 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
+        Response.Cookies.Delete("userToken");
         return Ok(new { message = "Logged out" });
+    }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _authService.ResetPasswordAsync(request.UserId, request.EmailAddress, request.NewPassword);
+
+        if (!result)
+        {
+            return BadRequest(new { message = "Invalid User ID or Email Address verification failed." });
+        }
+        
+        return Ok(new { message = "Your password has been reset successfully!" });
     }
 }

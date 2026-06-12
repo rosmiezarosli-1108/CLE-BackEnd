@@ -89,4 +89,6 @@ public class AleTerminalScheduleCreateDto
     public string? SunEnd { get; set; }
     public string? SunBreakStart { get; set; }
     public string? SunBreakEnd { get; set; }
+    
+    public string? ChangeRemarks { get; set; }
 }

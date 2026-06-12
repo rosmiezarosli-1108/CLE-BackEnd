@@ -100,7 +100,10 @@ builder.Services.AddScoped<IAleAssignedHaulierService, AleAssignedHaulierService
 builder.Services.AddScoped<IAleTimeSlotService, AleTimeSlotService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IAleTerminalScheduleService, AleTerminalScheduleService>();
+builder.Services.AddScoped<IAleQRCodeService, AleQRCodeService>();
 builder.Services.AddHostedService<TimeSlotBackgroundWorker>();
+builder.Services.AddHostedService<AleAutomationBackgroundWorker>();
+
 
 var app = builder.Build();
 

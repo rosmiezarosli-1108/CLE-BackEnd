@@ -85,7 +85,7 @@ public class AleAssignedHaulierController : ControllerBase
     {
         var aleAssignedHaulier = await _aleAssignedHaulierService.GetAleAssignedHaulierByContainerId(id);
         if (aleAssignedHaulier == null)
-            return NotFound(new{ message = $"Assigned Haulier with container ID of {id} not found" });
+            return Ok(null);
         return Ok(aleAssignedHaulier);
     }
 }

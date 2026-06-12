@@ -25,6 +25,8 @@ public class AleTimeSlot
     public virtual Company? Terminal { get; set; }
     
     public string? ChangeRemarks { get; set; }
+
+    public bool IsCancelled { get; set; } = false;
     
     public virtual ICollection<AleAssignedHaulier> AssignedHauliers { get; set; } = new List<AleAssignedHaulier>();
 }

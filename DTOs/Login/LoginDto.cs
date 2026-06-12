@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using CLE_BackEnd.Models;
 
 namespace CLE_BackEnd.DTOs;
 
-public class Login
+public class LoginDto
 {
     public string UserId { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
