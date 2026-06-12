@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
     private readonly IAuthService _authService;
     private readonly ITokenService _tokenService;
 
-    public AuthController(IAuthService authService,  ITokenService tokenService)
+    public AuthController(IAuthService authService, ITokenService tokenService)
     {
         _authService = authService;
         _tokenService = tokenService;
@@ -24,6 +24,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto request)
     {
+        // 1. Authenticate the user details against the database via AuthService
         var authResult = await _authService.AuthenticateAsync(request.UserId, request.Password, request.CompanyRegion, request.Access);
 
         if (authResult.User == null)
@@ -32,12 +33,16 @@ public class AuthController : ControllerBase
         }
     
         var user = authResult.User;
+        
+        // 2. Generate the secure JWT Token
         var token = _tokenService.GenerateToken(user);
     
-        // Return the token inside the JSON body instead of setting a Cookie
+        // 3. Return the token cleanly inside the JSON response body payload.
+        // This allows your frontend (Axios) to store it securely in localStorage 
+        // and bypasses cross-domain cookie blockages entirely.
         return Ok(new
         {
-            Token = token, // <-- Add this line
+            Token = token, 
             user.UserId,
             user.FullName,
             user.Access,
@@ -49,8 +54,9 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        Response.Cookies.Delete("userToken");
-        return Ok(new { message = "Logged out" });
+        // Since we are now relying entirely on local storage tokens on the client side,
+        // this simply acknowledges a successful server request.
+        return Ok(new { message = "Logged out successfully" });
     }
 
     [HttpPost("forgot-password")]
