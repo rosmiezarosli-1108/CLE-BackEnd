@@ -38,8 +38,8 @@ public class AuthController : ControllerBase
         {
             HttpOnly = true,       
             // Note: Once you deploy to a production server with SSL, change these back to true and Strict
-            Secure = false,          // Sent only over HTTPS (use false for localhost development)
-            SameSite = SameSiteMode.Lax, // Protects against CSRF, change to strict later
+            Secure = true,          // Sent only over HTTPS (use false for localhost development)
+            SameSite = SameSiteMode.None, // Protects against CSRF, change to strict later
             Path = "/",
             Domain = null,
             Expires = DateTime.UtcNow.AddDays(7)
